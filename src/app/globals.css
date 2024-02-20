@@ -31,3 +31,19 @@ body {
     text-wrap: balance;
   }
 }
+
+.bg-gradient-to-t {
+  background: linear-gradient(180deg, #141414 0%, #060606 100%);
+}
+
+.bg-gradient-to-r {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.00) 0%, rgba(255, 255, 255, 0.15) 51.5%, rgba(255, 255, 255, 0.00) 100%);
+}
+
+.page-container {
+    background: linear-gradient(180deg, #141414 0%, #060606 100%) !important;
+}
+
+.event-ticketing-iframe {
+    background: linear-gradient(180deg, #141414 0%, #060606 100%) !important;
+}
