@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { CustomButton } from "./custom-button";
+import { useWeb3Modal } from "@web3modal/wagmi/react";
+import { useAccount } from "wagmi";
 export const Registration = () => {
   type View = "email" | "download" | "connect" | "success";
 
@@ -161,6 +163,15 @@ const DownloadView = ({ onBack, onContinue }: DownloadViewProps) => {
 };
 
 const ConnectWalletView = ({ onBack, onContinue }: DownloadViewProps) => {
+  const { open, close } = useWeb3Modal();
+  const { address: activeAddress } = useAccount();
+
+  const [address, setAddress] = useState("");
+
+  const handleClickConnectWallet = () => {
+    open();
+  };
+
   return (
     <div>
       <div>
@@ -172,10 +183,16 @@ const ConnectWalletView = ({ onBack, onContinue }: DownloadViewProps) => {
         </div>
         <div className="flex flex-col items-center mb-4">
           <div className="py-6">
-            <CustomButton onClick={() => {}}>connect wallet</CustomButton>
+            <CustomButton onClick={handleClickConnectWallet}>
+              {!activeAddress
+                ? "connect wallet"
+                : `${activeAddress?.slice(0, 4)}...${activeAddress?.slice(-4)}`}
+            </CustomButton>
           </div>
           <p className="py-4">or copy paste your EVM address</p>
           <input
+            onChange={(e) => setAddress(e.target.value as `0x${string}`)}
+            value={address}
             type="text"
             placeholder="0x....ethdenver"
             className="focus:placeholder-opacity-25 px-4 py-4 text-white placeholder-white w-full bg-inherit font-nimbus-sans-extended text-base font-normal focus:outline-none text-center border-2 border-gray-600 rounded-md"
