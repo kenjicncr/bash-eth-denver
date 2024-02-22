@@ -26,6 +26,6 @@ export const config = defaultWagmiConfig({
   }),
   enableWalletConnect: true, // Optional - true by default
   enableInjected: true, // Optional - true by default
-  enableEIP6963: true, // Optional - true by default
-  enableCoinbase: true, // Optional - true by default
+  enableEIP6963: false, // Optional - true by default
+  enableCoinbase: false, // Optional - true by default
 });

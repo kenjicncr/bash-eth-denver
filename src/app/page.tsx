@@ -5,6 +5,11 @@ export default function Home() {
   return (
     <>
       <Script id="luma-checkout" src="https://embed.lu.ma/checkout-button.js" />
+      <Script
+        id="tokenproof"
+        src="https://cdn.tokenproof.xyz/js/tokenproof-oa-widget-v1.0.js"
+      />
+
       <main className="flex min-h-screen flex-col items-center justify-between p-12 bg-gradient-to-t">
         <div className="pt-12 w-full flex flex-col items-center">
           <Registration />

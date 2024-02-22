@@ -5,6 +5,13 @@ import { useEffect, useState } from "react";
 import { CustomButton } from "./custom-button";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { useAccount } from "wagmi";
+import {
+  safeConvertAddressSS58,
+  usePolkadotWeb3,
+} from "@/lib/polkadot/hooks/usePolkadotAccounts";
+import { PolkadotButton } from "./polkadot-button";
+import { TokenproofButton } from "./tokenproof-button";
+import { useMutation } from "@tanstack/react-query";
 export const Registration = () => {
   type View = "email" | "download" | "connect" | "success";
 
@@ -30,7 +37,7 @@ export const Registration = () => {
     switch (currentView) {
       case "email":
         return (
-          <EmailView
+          <TokenproofView
             onBack={() => handleBack({ goBackTo: "connect" })}
             onContinue={handleSubmitEmail}
           />
@@ -127,6 +134,70 @@ const EmailView = ({ onContinue, onBack }: EmailViewProps) => {
   );
 };
 
+const TokenproofView = ({ onContinue, onBack }: EmailViewProps) => {
+  const [isRendered, setIsRendered] = useState(false);
+
+  useEffect(() => {
+    setIsRendered(true);
+  }, []);
+
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [acount, setAccount] = useState<string | undefined>(undefined);
+
+  const claimTicketMutate = useMutation({
+    mutationFn: () => {
+      const eventId = "741b389a-fa59-4063-9f56-1ee6fbc73635";
+      const ticketId = "";
+      return fetch("https://api.tokenproof.xyz/v1/tickets/claim", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          account: "accountgoeshere",
+          network: "ethereum",
+          event_id: eventId,
+          ticket_options: [
+            {
+              guests: 1,
+              id: ticketId,
+            },
+          ],
+        }),
+      });
+    },
+  });
+
+  return (
+    <div>
+      <p className="text-gray-600 font-nimbus-sans-extended text-base font-normal">
+        Step 3 of 3:
+      </p>
+      <TokenproofButton
+        onAuthenticate={(response) => {
+          console.log({ response });
+          response.status === "authenticated"
+            ? setIsAuthenticated(true)
+            : setIsAuthenticated(false);
+
+          setAccount(response.account);
+        }}
+      />
+      <button
+        disabled={!isAuthenticated || !acount}
+        onClick={() => claimTicketMutate.mutate()}
+      >
+        Claim ticket
+      </button>
+
+      <div className="pt-12 w-full flex justify-between">
+        <CustomButton onClick={onBack}>back</CustomButton>
+        <CustomButton onClick={onContinue}>continue</CustomButton>
+      </div>
+    </div>
+  );
+};
+
 type DownloadViewProps = {
   onContinue: () => void;
   onBack: () => void;
@@ -164,13 +235,25 @@ const DownloadView = ({ onBack, onContinue }: DownloadViewProps) => {
 
 const ConnectWalletView = ({ onBack, onContinue }: DownloadViewProps) => {
   const { open, close } = useWeb3Modal();
-  const { address: activeAddress } = useAccount();
+  const { address: activeAddress, addresses } = useAccount();
 
   const [address, setAddress] = useState("");
+
+  useEffect(() => {
+    if (address) {
+      console.log("converting");
+      safeConvertAddressSS58(address, 7);
+    }
+  }, [address]);
+
+  const { accounts } = usePolkadotWeb3();
+  console.log({ accounts });
 
   const handleClickConnectWallet = () => {
     open();
   };
+
+  console.log({ addresses });
 
   return (
     <div>
@@ -183,11 +266,7 @@ const ConnectWalletView = ({ onBack, onContinue }: DownloadViewProps) => {
         </div>
         <div className="flex flex-col items-center mb-4">
           <div className="py-6">
-            <CustomButton onClick={handleClickConnectWallet}>
-              {!activeAddress
-                ? "connect wallet"
-                : `${activeAddress?.slice(0, 4)}...${activeAddress?.slice(-4)}`}
-            </CustomButton>
+            <PolkadotButton />
           </div>
           <p className="py-4">or copy paste your EVM address</p>
           <input

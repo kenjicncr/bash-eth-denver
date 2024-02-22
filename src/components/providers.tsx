@@ -2,12 +2,14 @@
 
 import React, { ReactNode } from "react";
 import { config, projectId } from "@/lib/wagmi/config";
+import UniversalProvider from "@walletconnect/universal-provider";
 
 import { createWeb3Modal } from "@web3modal/wagmi/react";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { State, WagmiProvider } from "wagmi";
+import { UniversalConnectProvider } from "./universal-connect-provider";
 
 // Setup queryClient
 const queryClient = new QueryClient();
@@ -19,6 +21,12 @@ createWeb3Modal({
   wagmiConfig: config,
   projectId,
   enableAnalytics: true, // Optional - defaults to your Cloud configuration
+  featuredWalletIds: [
+    "43fd1a0aeb90df53ade012cca36692a46d265f0b99b7561e645af42d752edb92",
+  ],
+  includeWalletIds: [
+    "43fd1a0aeb90df53ade012cca36692a46d265f0b99b7561e645af42d752edb92",
+  ],
 });
 
 export function Providers({
@@ -30,7 +38,11 @@ export function Providers({
 }) {
   return (
     <WagmiProvider config={config} initialState={initialState}>
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+      <UniversalConnectProvider>
+        <QueryClientProvider client={queryClient}>
+          {children}
+        </QueryClientProvider>
+      </UniversalConnectProvider>
     </WagmiProvider>
   );
 }
