@@ -9,12 +9,13 @@ export default function Home() {
         id="tokenproof"
         src="https://cdn.tokenproof.xyz/js/tokenproof-oa-widget-v1.0.js"
       />
-
-      <main className="flex min-h-screen flex-col items-center justify-between p-12 bg-gradient-to-t">
-        <div className="pt-12 w-full flex flex-col items-center">
-          <Registration />
-        </div>
-      </main>
+      <div>
+        <main className="flex min-h-screen flex-col items-center justify-between p-12 bg-gradient-to-t">
+          <div className="pt-12 w-full flex flex-col items-center">
+            <Registration />
+          </div>
+        </main>
+      </div>
     </>
   );
 }

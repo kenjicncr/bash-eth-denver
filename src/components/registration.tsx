@@ -12,6 +12,7 @@ import {
 import { PolkadotButton } from "./polkadot-button";
 import { TokenProofResponse, TokenproofButton } from "./tokenproof-button";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { toast } from "sonner";
 export const Registration = () => {
   type View = "email" | "download" | "connect" | "success";
 
@@ -40,6 +41,13 @@ export const Registration = () => {
           <TokenproofView
             onBack={() => handleBack({ goBackTo: "connect" })}
             onContinue={handleSubmitEmail}
+            onSuccess={() => setCurrentView("success")}
+            onError={(message) =>
+              toast.error(message, {
+                position: "bottom-center",
+                duration: 10000,
+              })
+            }
           />
         );
       case "download":
@@ -134,7 +142,18 @@ const EmailView = ({ onContinue, onBack }: EmailViewProps) => {
   );
 };
 
-const TokenproofView = ({ onContinue, onBack }: EmailViewProps) => {
+interface TokenproofViewProps {
+  onContinue: () => void;
+  onBack: () => void;
+  onSuccess: () => void;
+  onError?: (message: string) => void;
+}
+const TokenproofView = ({
+  onContinue,
+  onBack,
+  onSuccess,
+  onError,
+}: TokenproofViewProps) => {
   const [isRendered, setIsRendered] = useState(false);
 
   useEffect(() => {
@@ -157,31 +176,19 @@ const TokenproofView = ({ onContinue, onBack }: EmailViewProps) => {
         body: JSON.stringify({ nonce: nonce }),
       });
 
-      return await data.json();
-    },
-  });
+      const dataJson = await data.json();
 
-  const claimTicketMutate = useMutation({
-    mutationFn: () => {
-      const eventId = "741b389a-fa59-4063-9f56-1ee6fbc73635";
-      const ticketId = "e73319c1-ff01-4602-b376-b871ab104017";
-      return fetch("https://api.tokenproof.xyz/v1/tickets/claim", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          account: accountQuery.data.account,
-          network: "ethereum",
-          event_id: eventId,
-          ticket_options: [
-            {
-              guests: 1,
-              id: ticketId,
-            },
-          ],
-        }),
-      });
+      if (dataJson.claimTicketResult) {
+        if (dataJson.claimTicketResult.claim_id) {
+          onSuccess();
+        }
+
+        if (dataJson.claimTicketResult.code) {
+          onError && onError(dataJson.claimTicketResult.message);
+        }
+      }
+
+      return dataJson;
     },
   });
 
@@ -199,16 +206,9 @@ const TokenproofView = ({ onContinue, onBack }: EmailViewProps) => {
         Step 3 of 3:
       </p>
       <TokenproofButton onAuthenticate={handleTokenProofOnAuthenticate} />
-      <button
-        disabled={!isAuthenticated}
-        onClick={() => claimTicketMutate.mutate()}
-      >
-        Claim ticket
-      </button>
       {accountQuery.data && <p>{accountQuery.data.account}</p>}
       <div className="pt-12 w-full flex justify-between">
         <CustomButton onClick={onBack}>back</CustomButton>
-        <CustomButton onClick={onContinue}>continue</CustomButton>
       </div>
     </div>
   );
@@ -284,14 +284,6 @@ const ConnectWalletView = ({ onBack, onContinue }: DownloadViewProps) => {
           <div className="py-6">
             <PolkadotButton />
           </div>
-          <p className="py-4">or copy paste your EVM address</p>
-          <input
-            onChange={(e) => setAddress(e.target.value as `0x${string}`)}
-            value={address}
-            type="text"
-            placeholder="0x....ethdenver"
-            className="focus:placeholder-opacity-25 px-4 py-4 text-white placeholder-white w-full bg-inherit font-nimbus-sans-extended text-base font-normal focus:outline-none text-center border-2 border-gray-600 rounded-md"
-          />
         </div>
 
         <div className="w-274 h-1 bg-gradient-to-r from-transparent via-white to-transparent" />
@@ -313,8 +305,9 @@ const SuccessView = ({ onBack }: SuccessViewProps) => {
       <div>
         <div className="flex">
           <p className="mb-2">
-            Check your email for a <span className="font-bold">{`{bash}`}</span>{" "}
-            ticket and event details.
+            Check your Tokenproof app for the{" "}
+            <span className="font-bold">{`{bash}`}</span> ticket and event
+            details.
           </p>
         </div>
         <div className="w-274 h-1 bg-gradient-to-r from-transparent via-white to-transparent" />

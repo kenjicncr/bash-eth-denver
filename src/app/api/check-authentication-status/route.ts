@@ -22,8 +22,7 @@ export async function POST(req: NextRequest) {
     // claim ticket for user
     let claimTicketResult = {};
     if (result[0].account !== null) {
-      const ticketResult = await claimTicket(result[0].account);
-      claimTicketResult = await ticketResult.json();
+      claimTicketResult = await claimTicket(result[0].account);
     }
 
     // Respond with a success message
