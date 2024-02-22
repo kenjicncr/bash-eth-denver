@@ -19,33 +19,16 @@ export async function POST(req: NextRequest) {
       .distinct()
       .execute();
 
-    const eventId = "741b389a-fa59-4063-9f56-1ee6fbc73635";
-    const ticketId = "9757e9ae-d5ae-4ba3-a383-4c15a78ef3c4";
-
-    console.log(`account:`, result[0].account);
-    const claim = await fetch("https://api.tokenproof.xyz/v1/tickets/claim", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        account: result[0].account,
-        network: "ethereum",
-        event_id: eventId,
-        ticket_options: [
-          {
-            guests: 0,
-            id: ticketId,
-          },
-        ],
-      }),
-    });
-
-    console.log(await claim.json());
+    // claim ticket for user
+    let claimTicketResult = {};
+    if (result[0].account !== null) {
+      const ticketResult = await claimTicket(result[0].account);
+      claimTicketResult = await ticketResult.json();
+    }
 
     // Respond with a success message
     return NextResponse.json(
-      { ...result },
+      { ...result, claimTicketResult },
       {
         status: 200,
       }
@@ -60,3 +43,28 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+
+const claimTicket = async (account: string) => {
+  const eventId = "4c85a386-ead5-4051-aaba-5ea5213b7251";
+  const ticketId = "40f912df-a8ff-4c78-9597-b2c8510307c6";
+
+  const claim = await fetch("https://api.tokenproof.xyz/v1/tickets/claim", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      account: account,
+      network: "ethereum",
+      event_id: eventId,
+      ticket_options: [
+        {
+          guests: 0,
+          id: ticketId,
+        },
+      ],
+    }),
+  });
+
+  return await claim.json();
+};

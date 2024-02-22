@@ -20,6 +20,7 @@ export async function POST(req: NextRequest) {
 
     const db = createKysely<any>();
 
+    // save to db
     const result = await db
       .insertInto("tokenproofdata")
       .values({
