@@ -10,8 +10,8 @@ import {
   usePolkadotWeb3,
 } from "@/lib/polkadot/hooks/usePolkadotAccounts";
 import { PolkadotButton } from "./polkadot-button";
-import { TokenproofButton } from "./tokenproof-button";
-import { useMutation } from "@tanstack/react-query";
+import { TokenProofResponse, TokenproofButton } from "./tokenproof-button";
+import { useMutation, useQuery } from "@tanstack/react-query";
 export const Registration = () => {
   type View = "email" | "download" | "connect" | "success";
 
@@ -143,18 +143,35 @@ const TokenproofView = ({ onContinue, onBack }: EmailViewProps) => {
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [acount, setAccount] = useState<string | undefined>(undefined);
+  const [nonce, setNonce] = useState("");
+
+  const accountQuery = useQuery({
+    queryKey: ["account", nonce],
+    enabled: isAuthenticated && nonce !== "",
+    queryFn: async () => {
+      const data = await fetch("/api/check-authentication-status", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ nonce: nonce }),
+      });
+
+      return await data.json();
+    },
+  });
 
   const claimTicketMutate = useMutation({
     mutationFn: () => {
       const eventId = "741b389a-fa59-4063-9f56-1ee6fbc73635";
-      const ticketId = "";
+      const ticketId = "e73319c1-ff01-4602-b376-b871ab104017";
       return fetch("https://api.tokenproof.xyz/v1/tickets/claim", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          account: "accountgoeshere",
+          account: accountQuery.data.account,
           network: "ethereum",
           event_id: eventId,
           ticket_options: [
@@ -168,28 +185,27 @@ const TokenproofView = ({ onContinue, onBack }: EmailViewProps) => {
     },
   });
 
+  const handleTokenProofOnAuthenticate = (response: TokenProofResponse) => {
+    response.status === "authenticated"
+      ? setIsAuthenticated(true)
+      : setIsAuthenticated(false);
+
+    setNonce(response.nonce);
+  };
+
   return (
     <div>
       <p className="text-gray-600 font-nimbus-sans-extended text-base font-normal">
         Step 3 of 3:
       </p>
-      <TokenproofButton
-        onAuthenticate={(response) => {
-          console.log({ response });
-          response.status === "authenticated"
-            ? setIsAuthenticated(true)
-            : setIsAuthenticated(false);
-
-          setAccount(response.account);
-        }}
-      />
+      <TokenproofButton onAuthenticate={handleTokenProofOnAuthenticate} />
       <button
-        disabled={!isAuthenticated || !acount}
+        disabled={!isAuthenticated}
         onClick={() => claimTicketMutate.mutate()}
       >
         Claim ticket
       </button>
-
+      {accountQuery.data && <p>{accountQuery.data.account}</p>}
       <div className="pt-12 w-full flex justify-between">
         <CustomButton onClick={onBack}>back</CustomButton>
         <CustomButton onClick={onContinue}>continue</CustomButton>
