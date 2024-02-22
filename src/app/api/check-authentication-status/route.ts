@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
       .execute();
 
     const eventId = "741b389a-fa59-4063-9f56-1ee6fbc73635";
-    const ticketId = "e73319c1-ff01-4602-b376-b871ab104017";
+    const ticketId = "9757e9ae-d5ae-4ba3-a383-4c15a78ef3c4";
 
     console.log(`account:`, result[0].account);
     const claim = await fetch("https://api.tokenproof.xyz/v1/tickets/claim", {
@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
         event_id: eventId,
         ticket_options: [
           {
-            guests: 1,
+            guests: 0,
             id: ticketId,
           },
         ],
