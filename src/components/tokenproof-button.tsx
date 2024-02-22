@@ -3,12 +3,12 @@ import React, { useCallback, useEffect } from "react";
 import { CustomButton } from "./custom-button";
 import { useMutation } from "@tanstack/react-query";
 
-interface TokenProofResponse {
+export interface TokenProofResponse {
   nonce: string;
   status: "authenticated" | "rejected";
   reason?: string;
-  timestamp: string;
-  session_id: string;
+  timestamp?: string;
+  session_id?: string;
   accounts?: string[];
   account?: string;
 }
