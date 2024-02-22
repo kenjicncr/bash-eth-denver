@@ -202,10 +202,17 @@ const TokenproofView = ({
 
   return (
     <div>
-      <p className="text-gray-600 font-nimbus-sans-extended text-base font-normal">
-        Step 3 of 3:
-      </p>
-      <TokenproofButton onAuthenticate={handleTokenProofOnAuthenticate} />
+      <div className="flex">
+        <p className="text-gray-600 font-nimbus-sans-extended text-base font-normal">
+          Step 3 of 3:
+        </p>
+        <p className="font-bold mb-2 ml-2">
+          verify with tokenproof to claim ticket
+        </p>
+      </div>
+      <div className="pt-12">
+        <TokenproofButton onAuthenticate={handleTokenProofOnAuthenticate} />
+      </div>
       {accountQuery.data && <p>{accountQuery.data.account}</p>}
       <div className="pt-12 w-full flex justify-between">
         <CustomButton onClick={onBack}>back</CustomButton>

@@ -2,6 +2,7 @@
 import React, { useCallback, useEffect } from "react";
 import { CustomButton } from "./custom-button";
 import { useMutation } from "@tanstack/react-query";
+import Image from "next/image";
 
 export interface TokenProofResponse {
   nonce: string;
@@ -39,9 +40,17 @@ export const TokenproofButton = ({ onAuthenticate }: TokenproofButtonProps) => {
 
   return (
     <div>
-      <CustomButton onClick={mutation.mutate}>
-        Verify with tokenproof
-      </CustomButton>
+      <button
+        onClick={() => mutation.mutate()}
+        aria-label="verify with tokenproof"
+      >
+        <Image
+          src="/tokenproof-button.png"
+          alt="Image"
+          width={530}
+          height={111}
+        />
+      </button>
     </div>
   );
 };
