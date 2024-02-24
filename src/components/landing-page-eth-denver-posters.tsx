@@ -11,26 +11,31 @@ export const LandingPageEthDenverPosters = () => {
         className="max-w-[20vw]"
         src={ethDenverPoster1}
         alt="eth denver poster 1"
+        priority
       />
       <Image
         className="max-w-[20vw]"
         src={ethDenverPoster3}
         alt="eth denver poster 5"
+        priority
       />
       <Image
         className="max-w-[20vw]"
         src={ethDenverPoster2}
         alt="eth denver poster 2"
+        priority
       />
       <Image
         className="max-w-[20vw]"
         src={ethDenverPoster4}
         alt="eth denver poster 4"
+        priority
       />
       <Image
         className="max-w-[20vw]"
         src={ethDenverPoster3}
         alt="eth denver poster 3"
+        priority
       />
     </div>
   );
