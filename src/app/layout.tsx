@@ -7,6 +7,7 @@ import "./globals.css";
 import { config } from "@/lib/wagmi/config";
 import { Providers } from "@/components/providers";
 import { Toaster } from "sonner";
+import { Header } from "@/components/header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,7 +25,8 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`${inter.className}`}>
+      <body className="bg-gradient-to-t">
+        <Header />
         <Toaster />
         <Providers initialState={initialState}>{children}</Providers>
       </body>

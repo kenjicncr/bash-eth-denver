@@ -28,7 +28,7 @@ export const usePolkadotWeb3 = () => {
 
         console.log({ polkadotAddy });
 
-        const extensions = await web3Enable("my cool dapp");
+        const extensions = await web3Enable("Bash ETHDenver");
         console.log({ extensions });
         const allAccounts = await web3Accounts();
         const provider = address ? await web3FromAddress(address) : [];

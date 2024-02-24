@@ -11,7 +11,7 @@ export default function Home() {
       />
       <div>
         <main className="flex min-h-screen flex-col items-center justify-between p-12 bg-gradient-to-t">
-          <div className="pt-12 w-full flex flex-col items-center">
+          <div className="pt-12 lg:pt-32 w-full flex flex-col items-center">
             <Registration />
           </div>
         </main>
