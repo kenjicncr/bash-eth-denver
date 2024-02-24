@@ -1,8 +1,12 @@
 import { WalletConnectModal } from "@walletconnect/modal";
 import { CustomButton } from "./custom-button";
 import { useUniversalConnect } from "./universal-connect-provider";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
+import { LoadingSpinner } from "./loading-spinner";
+
+import novaWalletLogo from "@/assets/icons/NovaWallet.svg";
+import Image from "next/image";
 
 export const projectId = process.env.NEXT_PUBLIC_PROJECT_ID;
 
@@ -21,9 +25,13 @@ const params = {
 export const PolkadotButton = () => {
   const { provider } = useUniversalConnect();
   const [polkadotAddress, setPolkadotAddress] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [walletConnectModal, setWalletConnectModal] =
+    useState<WalletConnectModal | null>(null);
 
   const openWalletConnectModal = async () => {
     if (provider) {
+      setIsLoading(true);
       const { uri, approval } = await provider.client.connect(params);
 
       const walletConnectModal = new WalletConnectModal({
@@ -32,6 +40,7 @@ export const PolkadotButton = () => {
           `43fd1a0aeb90df53ade012cca36692a46d265f0b99b7561e645af42d752edb92`,
         ],
       });
+      setWalletConnectModal(walletConnectModal);
 
       if (uri) {
         walletConnectModal.openModal({ uri });
@@ -57,9 +66,35 @@ export const PolkadotButton = () => {
     }
   };
 
+  useEffect(() => {
+    const unsubscribe = walletConnectModal?.subscribeModal((state) => {
+      console.log(state);
+      if (state.open === false) {
+        setIsLoading(false);
+      }
+    });
+
+    return () => {
+      if (unsubscribe) {
+        unsubscribe();
+      }
+    };
+  }, [walletConnectModal]);
+
   return (
-    <CustomButton onClick={openWalletConnectModal}>
-      {polkadotAddress !== "" ? polkadotAddress : "Connect Nova Wallet"}
-    </CustomButton>
+    <button
+      onClick={openWalletConnectModal}
+      aria-label="Connect with Nova Wallet"
+      className="flex justify-center items-center px-4 py-4 bg-white text-black  rounded-md"
+    >
+      {isLoading ? (
+        <LoadingSpinner size={20} color="black" />
+      ) : (
+        <Image src={novaWalletLogo} alt="nova wallet" height={20} width={20} />
+      )}
+      <span className="ml-2 tracking-wide">
+        {polkadotAddress !== "" ? polkadotAddress : "Connect Nova Wallet"}
+      </span>
+    </button>
   );
 };

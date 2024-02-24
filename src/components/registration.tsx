@@ -111,7 +111,7 @@ const EmailView = ({ onContinue, onBack }: EmailViewProps) => {
 
   return (
     <div>
-      <p className="text-gray-600 font-nimbus-sans-extended text-base font-normal">
+      <p className="text-teal-400 font-nimbus-sans-extended text-base font-normal">
         Step 3 of 3:
       </p>
       <div style={{ transform: `translateX(-50%)` }}>
@@ -203,16 +203,17 @@ const TokenproofView = ({
   return (
     <div>
       <div className="flex">
-        <p className="text-gray-600 font-nimbus-sans-extended text-base font-normal">
+        <p className="text-teal-400 font-nimbus-sans-extended text-base font-normal">
           Step 3 of 3:
         </p>
         <p className="font-bold mb-2 ml-2">
           verify with tokenproof to claim ticket
         </p>
       </div>
-      <div className="pt-12">
+      <div className="py-12">
         <TokenproofButton onAuthenticate={handleTokenProofOnAuthenticate} />
       </div>
+      <div className="w-274 h-1 bg-gradient-to-r from-transparent via-white to-transparent" />
       {accountQuery.data && <p>{accountQuery.data.account}</p>}
       <div className="pt-12 w-full flex justify-between">
         <CustomButton onClick={onBack}>back</CustomButton>
@@ -231,7 +232,7 @@ const DownloadView = ({ onBack, onContinue }: DownloadViewProps) => {
     <div>
       <div>
         <div className="flex">
-          <p className="text-gray-600 font-nimbus-sans-extended text-base font-normal">
+          <p className="text-teal-400 font-nimbus-sans-extended text-base font-normal">
             Step 1 of 3:
           </p>
           <p className="font-bold mb-2 ml-2">download nova wallet on mobile</p>
@@ -241,7 +242,12 @@ const DownloadView = ({ onBack, onContinue }: DownloadViewProps) => {
           <Image src="/nova-qr.png" alt="qr code" width={200} height={200} />
           <p className="py-4">or visit</p>
           <div className="mb-4">
-            <a href="https://novawallet.io/" className="underline">
+            <a
+              href="https://novawallet.io/"
+              target="_blank"
+              rel="noopener noreferrer nofollow"
+              className="underline"
+            >
               https://novawallet.io/
             </a>
           </div>
@@ -282,13 +288,13 @@ const ConnectWalletView = ({ onBack, onContinue }: DownloadViewProps) => {
     <div>
       <div>
         <div className="flex">
-          <p className="text-gray-600 font-nimbus-sans-extended text-base font-normal">
+          <p className="text-teal-400 font-nimbus-sans-extended text-base font-normal">
             Step 2 of 3:
           </p>
           <p className="font-bold mb-2 ml-2">connect nova wallet</p>
         </div>
-        <div className="flex flex-col items-center mb-4">
-          <div className="py-6">
+        <div className="flex flex-col items-center">
+          <div className="py-12">
             <PolkadotButton />
           </div>
         </div>
