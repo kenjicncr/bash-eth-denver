@@ -50,8 +50,6 @@ export const PolkadotButton = ({ onConnectAccount }: PolkadotButtonProps) => {
 
         const walletConnectSession = await approval();
 
-        walletConnectModal.closeModal();
-
         const walletConnectAccount = Object.values(
           walletConnectSession.namespaces
         )
@@ -64,9 +62,13 @@ export const PolkadotButton = ({ onConnectAccount }: PolkadotButtonProps) => {
           return address;
         });
 
+        console.log({ accounts });
+
         setPolkadotAddress(accounts[0]);
         onConnectAccount && onConnectAccount(accounts[0]);
         setIsLoading(false);
+
+        walletConnectModal.closeModal();
       }
     }
   };

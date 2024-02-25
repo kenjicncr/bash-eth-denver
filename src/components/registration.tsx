@@ -48,7 +48,7 @@ export const Registration = () => {
     },
     onSuccess: (data) => {
       console.log({ data });
-      setPolkadotAddress;
+      // setPolkadotAddress(polkadotAddress);
       setCurrentView("tokenproof");
     },
     onError: (error) => {
@@ -66,6 +66,7 @@ export const Registration = () => {
   };
 
   const handleConnectNovaWallet = (address: string) => {
+    console.log({ address });
     setPolkadotAddress(address);
   };
 
@@ -353,7 +354,7 @@ const DownloadView = ({ onBack, onContinue }: DownloadViewProps) => {
           <p className="font-bold mb-2 ml-2">download nova wallet on mobile</p>
         </div>
         <div className="flex flex-col items-center">
-          <p className="mb-2">scan qr code</p>
+          <p className="mb-2">scan qr code to download</p>
           <Image src="/nova-qr.png" alt="qr code" width={200} height={200} />
           <p className="py-4">or visit</p>
           <div className="mb-4">
@@ -370,9 +371,18 @@ const DownloadView = ({ onBack, onContinue }: DownloadViewProps) => {
 
         <div className="w-274 h-1 bg-gradient-to-r from-transparent via-white to-transparent" />
       </div>
-      <div className="pt-12 w-full flex justify-between">
+      <div className="pt-4  w-full flex justify-between">
+        <div />
+        <p className="text-gray-100 text-sm mb-2">
+          {" "}
+          {`I have installed nova wallet`}
+        </p>
+      </div>
+      <div className=" w-full flex justify-between">
         <CustomButton onClick={onBack}>back</CustomButton>
-        <CustomButton onClick={onContinue}>continue</CustomButton>
+        <div className="relative">
+          <CustomButton onClick={onContinue}>continue</CustomButton>
+        </div>
       </div>
     </div>
   );
