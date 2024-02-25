@@ -19,7 +19,7 @@ export const CustomButton = ({
       {...rest}
     >
       {isLoading ? (
-        <div className="ml-2">
+        <div className="mr-2">
           <LoadingSpinner size={20} color="white" />
         </div>
       ) : null}
