@@ -12,7 +12,12 @@ export const LandingPage = () => {
     <div>
       <section className="h-screen lg:h-auto w-full flex-col flex justify-center items-center">
         <div className=" w-full lg:min-h-screen flex-1 flex-col flex justify-center items-center">
-          <Image className="w-1/2 md:w-1/4" src={logo} alt="bash logo" />
+          <Image
+            priority
+            className="w-1/2 md:w-1/4"
+            src={logo}
+            alt="bash logo"
+          />
           <div className="flex flex-col justify-center items-center">
             <p className="mt-2">
               records and events for artists and their communities
