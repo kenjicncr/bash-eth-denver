@@ -18,8 +18,12 @@ export const CustomButton = ({
       className="flex justify-center items-center h-8 px-4 py-4 flex-shrink-0 rounded-md border-2 border-teal-400 bg-gray-300 bg-opacity-25"
       {...rest}
     >
-      {isLoading ? <LoadingSpinner size={20} color="white" /> : null}
-      <div className="ml-2 ">{children}</div>
+      {isLoading ? (
+        <div className="ml-2">
+          <LoadingSpinner size={20} color="white" />
+        </div>
+      ) : null}
+      <div>{children}</div>
     </button>
   );
 };
