@@ -15,6 +15,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { updateUser } from "@/lib/api/update-user";
 import { error } from "console";
+import { isValidAddressPolkadotAddress } from "@/lib/polkadot/utils";
 export const Registration = () => {
   type View = "email" | "download" | "connect" | "tokenproof" | "success";
 
@@ -69,7 +70,11 @@ export const Registration = () => {
   };
 
   const handleOnContinueConnect = () => {
-    submitNovaWalletMutation.mutate(polkadotAddress);
+    if (isValidAddressPolkadotAddress(polkadotAddress)) {
+      submitNovaWalletMutation.mutate(polkadotAddress);
+    } else {
+      toast.error("Not a valid polkadot address");
+    }
   };
 
   // --- end nova wallet submission //
@@ -86,7 +91,6 @@ export const Registration = () => {
     },
     onError: (error) => {
       toast.error(error.message, {
-        position: "bottom-center",
         duration: 10000,
         dismissible: true,
       });

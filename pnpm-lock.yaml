@@ -11,9 +11,15 @@ dependencies:
   '@polkadot/extension-inject':
     specifier: ^0.46.6
     version: 0.46.6(@polkadot/api@10.11.2)(@polkadot/util@12.6.2)
+  '@polkadot/keyring':
+    specifier: ^12.6.2
+    version: 12.6.2(@polkadot/util-crypto@12.6.2)(@polkadot/util@12.6.2)
   '@polkadot/types':
     specifier: ^10.11.2
     version: 10.11.2
+  '@polkadot/util':
+    specifier: ^12.6.2
+    version: 12.6.2
   '@polkadot/util-crypto':
     specifier: ^12.6.2
     version: 12.6.2(@polkadot/util@12.6.2)
