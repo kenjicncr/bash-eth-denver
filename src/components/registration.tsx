@@ -91,7 +91,7 @@ export const Registration = () => {
     },
     onError: (error) => {
       toast.error(error.message, {
-        duration: 10000,
+        duration: 20000,
         dismissible: true,
       });
     },

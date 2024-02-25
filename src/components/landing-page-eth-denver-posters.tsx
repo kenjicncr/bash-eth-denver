@@ -1,8 +1,8 @@
 import Image from "next/image";
-import ethDenverPoster1 from "@/assets/posters/bash_v1Announce_blue_march2.png";
-import ethDenverPoster2 from "@/assets/posters/bash_v1Announce_green_march2.png";
-import ethDenverPoster3 from "@/assets/posters/bash_v1Announce_march2.gif";
-import ethDenverPoster4 from "@/assets/posters/bash_v1Announce_red_march2.png";
+import ethDenverPoster1 from "@/assets/posters/eth-denver-blue.jpg";
+import ethDenverPoster2 from "@/assets/posters/eth-denver-green.jpg";
+import ethDenverPoster3 from "@/assets/posters/eth-denver-all.gif";
+import ethDenverPoster4 from "@/assets/posters/eth-denver-yellow.jpg";
 
 export const LandingPageEthDenverPosters = () => {
   return (

@@ -1,6 +1,11 @@
 import { Registration } from "@/components/registration";
 import Script from "next/script";
+import type { Metadata } from "next";
 
+export const metadata: Metadata = {
+  title: "{Bash} | ETH Denver After Party",
+  description: "Register for the official ETH Denver 2024 after party",
+};
 export default function Home() {
   return (
     <>
