@@ -48,7 +48,11 @@ export const PolkadotButton = ({ onConnectAccount }: PolkadotButtonProps) => {
       if (uri) {
         walletConnectModal.openModal({ uri });
 
+        console.log("waiting wallet connect approval...");
+
         const walletConnectSession = await approval();
+
+        console.log("wallet connect approved");
 
         const walletConnectAccount = Object.values(
           walletConnectSession.namespaces
