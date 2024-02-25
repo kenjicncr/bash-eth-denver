@@ -18,7 +18,7 @@ import { error } from "console";
 export const Registration = () => {
   type View = "email" | "download" | "connect" | "tokenproof" | "success";
 
-  const [currentView, setCurrentView] = useState<View>("connect");
+  const [currentView, setCurrentView] = useState<View>("email");
 
   const [email, setEmail] = useState("");
   const [polkadotAddress, setPolkadotAddress] = useState("");
