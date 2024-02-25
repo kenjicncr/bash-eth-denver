@@ -50,6 +50,9 @@ export const PolkadotButton = ({ onConnectAccount }: PolkadotButtonProps) => {
 
       const walletConnectModal = new WalletConnectModal({
         projectId: projectId!,
+        explorerRecommendedWalletIds: [
+          `43fd1a0aeb90df53ade012cca36692a46d265f0b99b7561e645af42d752edb92`,
+        ],
       });
       setWalletConnectModal(walletConnectModal);
 

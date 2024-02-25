@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { CustomButton } from "./custom-button";
-import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { useAccount } from "wagmi";
 import {
   safeConvertAddressSS58,
@@ -404,15 +403,10 @@ const ConnectWalletView = ({
   address,
   isContinueLoading,
 }: ConnectWalletViewProps) => {
-  const { open, close } = useWeb3Modal();
   const { address: activeAddress, addresses } = useAccount();
 
   const handlePolkadotAddressChange = (e: any) =>
     onChangeAddress(e.target.value); // handleChange
-
-  const handleClickConnectWallet = () => {
-    open();
-  };
 
   return (
     <div>
@@ -432,10 +426,7 @@ const ConnectWalletView = ({
               <p className="text-teal-400 py-4 text-center font-nimbus-sans-extended text-base font-normal">
                 or
               </p>
-              <p
-                className="text-white text-center mb-4 font-nimbus-sans-extended text-base font-normal"
-                onClick={handleClickConnectWallet}
-              >
+              <p className="text-white text-center mb-4 font-nimbus-sans-extended text-base font-normal">
                 copy paste nova wallet address here
               </p>
               <div className="w-full">
