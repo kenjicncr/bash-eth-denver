@@ -22,7 +22,9 @@ nextjs-portal {
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
+  color: rgb(255,
+    255,
+    255);
   background: linear-gradient(
       to bottom,
       transparent,
