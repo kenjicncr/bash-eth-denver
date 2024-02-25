@@ -22,7 +22,10 @@ const params = {
   },
 };
 
-export const PolkadotButton = () => {
+interface PolkadotButtonProps {
+  onConnectAccount: (address: string) => void;
+}
+export const PolkadotButton = ({ onConnectAccount }: PolkadotButtonProps) => {
   const { provider } = useUniversalConnect();
   const [polkadotAddress, setPolkadotAddress] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -62,6 +65,8 @@ export const PolkadotButton = () => {
         });
 
         setPolkadotAddress(accounts[0]);
+        onConnectAccount && onConnectAccount(accounts[0]);
+        setIsLoading(false);
       }
     }
   };
@@ -92,9 +97,7 @@ export const PolkadotButton = () => {
       ) : (
         <Image src={novaWalletLogo} alt="nova wallet" height={20} width={20} />
       )}
-      <span className="ml-2 tracking-wide">
-        {polkadotAddress !== "" ? polkadotAddress : "Connect Nova Wallet"}
-      </span>
+      <span className="ml-2 tracking-wide">Connect Nova Wallet</span>
     </button>
   );
 };

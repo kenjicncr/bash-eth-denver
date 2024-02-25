@@ -1,21 +1,25 @@
 import React from "react";
+import { LoadingSpinner } from "./loading-spinner";
 
 export const CustomButton = ({
   onClick,
   children,
+  isLoading,
   ...rest
 }: {
   onClick: () => void;
   children: React.ReactNode;
   [x: string]: any;
+  isLoading?: boolean;
 }) => {
   return (
     <button
       onClick={onClick}
-      className="inline-flex h-8 px-7 justify-center items-center gap-2 flex-shrink-0 rounded-md border-2 border-teal-400 bg-gray-300 bg-opacity-25"
+      className="flex justify-center items-center h-8 px-4 py-4 flex-shrink-0 rounded-md border-2 border-teal-400 bg-gray-300 bg-opacity-25"
       {...rest}
     >
-      {children}
+      {isLoading ? <LoadingSpinner size={20} color="white" /> : null}
+      <div className="ml-2 ">{children}</div>
     </button>
   );
 };

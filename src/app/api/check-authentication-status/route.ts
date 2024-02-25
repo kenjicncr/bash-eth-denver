@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
 
     const db = createKysely<any>();
 
-    const result = await db
+    const results = await db
       .selectFrom("tokenproofdata")
       .select(["nonce", "status", "account", "timestamp", "session_id"])
       .where("nonce", "=", data.nonce)
@@ -21,9 +21,11 @@ export async function POST(req: NextRequest) {
 
     // claim ticket for user
     let claimTicketResult = {};
-    if (result[0].account !== null) {
-      claimTicketResult = await claimTicket(result[0].account);
+    if (results[0].account !== null) {
+      claimTicketResult = await claimTicket(results[0].account);
     }
+
+    const result = results[0];
 
     // Respond with a success message
     return NextResponse.json(

@@ -13,14 +13,91 @@ import { PolkadotButton } from "./polkadot-button";
 import { TokenProofResponse, TokenproofButton } from "./tokenproof-button";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { updateUser } from "@/lib/api/update-user";
+import { error } from "console";
 export const Registration = () => {
-  type View = "email" | "download" | "connect" | "success";
+  type View = "email" | "download" | "connect" | "tokenproof" | "success";
 
-  const [currentView, setCurrentView] = useState<View>("download");
+  const [currentView, setCurrentView] = useState<View>("connect");
 
-  const handleSubmitEmail = () => {
-    setCurrentView("success");
+  const [email, setEmail] = useState("");
+  const [polkadotAddress, setPolkadotAddress] = useState("");
+
+  const submitEmailMutation = useMutation({
+    mutationFn: (email: string) => {
+      return updateUser({ email });
+    },
+    onSuccess: (data) => {
+      console.log({ data });
+      setEmail(data.user.email);
+      setCurrentView("download");
+    },
+    mutationKey: ["update-user-email", email],
+  });
+
+  const handleSubmitEmail = (email: string) => {
+    submitEmailMutation.mutate(email);
   };
+
+  // For Nov wallet submission
+
+  const submitNovaWalletMutation = useMutation({
+    mutationFn: (polkadotAddress: string) => {
+      return updateUser({ email: email, polkadotAddress });
+    },
+    onSuccess: (data) => {
+      console.log({ data });
+      setPolkadotAddress;
+      setCurrentView("tokenproof");
+    },
+    onError: (error) => {
+      toast.error(error.message, {
+        position: "bottom-center",
+        duration: 10000,
+        dismissible: true,
+      });
+    },
+    mutationKey: ["update-user-polkadot", polkadotAddress],
+  });
+
+  const handleChangePolkadotAddress = (address: string) => {
+    setPolkadotAddress(address);
+  };
+
+  const handleConnectNovaWallet = (address: string) => {
+    setPolkadotAddress(address);
+  };
+
+  const handleOnContinueConnect = () => {
+    submitNovaWalletMutation.mutate(polkadotAddress);
+  };
+
+  // --- end nova wallet submission //
+
+  /** --- start tokenproof submission --- */
+
+  const submitTokenproofMutation = useMutation({
+    mutationFn: (tokenproofAddress: string) => {
+      return updateUser({ email: email, tokenproofAddress });
+    },
+    onSuccess: (data) => {
+      console.log({ data });
+      setCurrentView("success");
+    },
+    onError: (error) => {
+      toast.error(error.message, {
+        position: "bottom-center",
+        duration: 10000,
+        dismissible: true,
+      });
+    },
+  });
+
+  const handleTokenProofSuccess = (account: string) => {
+    submitTokenproofMutation.mutate(account);
+  };
+
+  /** --- end tokenproof submission --- */
 
   const handleContinueDownload = () => {
     setCurrentView("connect");
@@ -30,18 +107,13 @@ export const Registration = () => {
     setCurrentView(goBackTo);
   };
 
-  const handleContinueConnect = () => {
-    setCurrentView("email");
-  };
-
   const renderRegistrationView = () => {
     switch (currentView) {
-      case "email":
+      case "tokenproof":
         return (
           <TokenproofView
             onBack={() => handleBack({ goBackTo: "connect" })}
-            onContinue={handleSubmitEmail}
-            onSuccess={() => setCurrentView("success")}
+            onSuccess={handleTokenProofSuccess}
             onError={(message) =>
               toast.error(message, {
                 position: "bottom-center",
@@ -52,13 +124,20 @@ export const Registration = () => {
         );
       case "download":
         return (
-          <DownloadView onBack={() => {}} onContinue={handleContinueDownload} />
+          <DownloadView
+            onBack={() => handleBack({ goBackTo: "email" })}
+            onContinue={handleContinueDownload}
+          />
         );
       case "connect":
         return (
           <ConnectWalletView
-            onContinue={handleContinueConnect}
+            address={polkadotAddress}
+            onChangeAddress={handleChangePolkadotAddress}
+            onConnectAccount={handleConnectNovaWallet}
+            onContinue={handleOnContinueConnect}
             onBack={() => handleBack({ goBackTo: "download" })}
+            isContinueLoading={submitNovaWalletMutation.isPending}
           />
         );
       case "success":
@@ -66,8 +145,10 @@ export const Registration = () => {
       default:
         return (
           <EmailView
-            onBack={() => handleBack({ goBackTo: "connect" })}
-            onContinue={handleSubmitEmail}
+            email={email}
+            onChangeEmail={(email) => setEmail(email)}
+            isLoading={submitEmailMutation.isPending}
+            onContinue={(email) => handleSubmitEmail(email)}
           />
         );
     }
@@ -98,54 +179,83 @@ export const Registration = () => {
 };
 
 type EmailViewProps = {
-  onContinue: () => void;
-  onBack: () => void;
+  onContinue: (email: string) => void;
+  onBack?: () => void;
+  isLoading?: boolean;
+  email: string;
+  onChangeEmail: (email: string) => void;
 };
 
-const EmailView = ({ onContinue, onBack }: EmailViewProps) => {
-  const [isRendered, setIsRendered] = useState(false);
+const EmailView = ({
+  email,
+  onChangeEmail,
+  onContinue,
+  onBack,
+  isLoading,
+}: EmailViewProps) => {
+  const [isValid, setIsValid] = useState(true);
+  const [showError, setShowError] = useState(false);
+
+  const handleEmailChange = (e: any) => {
+    const _email = e.target.value;
+
+    onChangeEmail(_email);
+  };
+
+  const onSubmit = () => {
+    if (isValid) {
+      setShowError(false);
+      onContinue && onContinue(email);
+    } else {
+      setShowError(true);
+    }
+  };
 
   useEffect(() => {
-    setIsRendered(true);
-  }, []);
+    // Basic email format validation
+    const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    setIsValid(isValidEmail);
+  }, [email]);
 
   return (
     <div>
       <p className="text-teal-400 font-nimbus-sans-extended text-base font-normal">
-        Step 3 of 3:
+        Step 1 of 4:
       </p>
-      <div style={{ transform: `translateX(-50%)` }}>
-        {/**
-         * <input
-          type="text"
+      <div className="relative">
+        <input
+          type="email"
+          value={email}
+          onChange={handleEmailChange}
           placeholder="enter your email address"
-          className="focus:placeholder-opacity-25 px-4 py-4 text-white placeholder-white w-full bg-inherit font-nimbus-sans-extended text-base font-normal focus:outline-none"
+          className="focus:placeholder-opacity-25 px-4 py-8 text-white placeholder-white w-full bg-inherit font-nimbus-sans-extended text-base font-normal focus:outline-none"
         />
-         */}
-        <iframe
-          src="https://lu.ma/embed-checkout/evt-iD7N4HyrRHKZ6MP"
-          width="800"
-          height="400"
-          allowFullScreen={false}
-          aria-hidden="false"
-          tabIndex={0}
-          className="overflow-hidden event-ticketing-iframe"
-        />
-
+        <div className="px-4 h-4 absolute -bottom-4">
+          {showError && (
+            <p className="text-red-500 text-sm">
+              Please enter a valid email address
+            </p>
+          )}
+        </div>
         <div className="w-274 h-1 bg-gradient-to-r from-transparent via-white to-transparent" />
       </div>
       <div className="pt-12 w-full flex justify-between">
-        <CustomButton onClick={onBack}>back</CustomButton>
-        <CustomButton onClick={onContinue}>continue</CustomButton>
+        <div>
+          {onBack && <CustomButton onClick={onBack}>back</CustomButton>}
+        </div>
+
+        <CustomButton isLoading={isLoading} onClick={onSubmit}>
+          continue
+        </CustomButton>
       </div>
     </div>
   );
 };
 
 interface TokenproofViewProps {
-  onContinue: () => void;
+  onContinue?: () => void;
   onBack: () => void;
-  onSuccess: () => void;
+  onSuccess: (account: string) => void;
   onError?: (message: string) => void;
 }
 const TokenproofView = ({
@@ -180,7 +290,8 @@ const TokenproofView = ({
 
       if (dataJson.claimTicketResult) {
         if (dataJson.claimTicketResult.claim_id) {
-          onSuccess();
+          console.log({ dataJson });
+          onSuccess(dataJson.account);
         }
 
         if (dataJson.claimTicketResult.code) {
@@ -233,7 +344,7 @@ const DownloadView = ({ onBack, onContinue }: DownloadViewProps) => {
       <div>
         <div className="flex">
           <p className="text-teal-400 font-nimbus-sans-extended text-base font-normal">
-            Step 1 of 3:
+            Step 2 of 4:
           </p>
           <p className="font-bold mb-2 ml-2">download nova wallet on mobile</p>
         </div>
@@ -255,34 +366,39 @@ const DownloadView = ({ onBack, onContinue }: DownloadViewProps) => {
 
         <div className="w-274 h-1 bg-gradient-to-r from-transparent via-white to-transparent" />
       </div>
-      <div className="pt-12 w-full flex justify-end">
+      <div className="pt-12 w-full flex justify-between">
+        <CustomButton onClick={onBack}>back</CustomButton>
         <CustomButton onClick={onContinue}>continue</CustomButton>
       </div>
     </div>
   );
 };
 
-const ConnectWalletView = ({ onBack, onContinue }: DownloadViewProps) => {
+interface ConnectWalletViewProps {
+  onBack: () => void;
+  onContinue: () => void;
+  address: string;
+  onConnectAccount: (address: string) => void;
+  onChangeAddress: (address: string) => void;
+  isContinueLoading: boolean;
+}
+const ConnectWalletView = ({
+  onBack,
+  onContinue,
+  onConnectAccount,
+  onChangeAddress,
+  address,
+  isContinueLoading,
+}: ConnectWalletViewProps) => {
   const { open, close } = useWeb3Modal();
   const { address: activeAddress, addresses } = useAccount();
 
-  const [address, setAddress] = useState("");
-
-  useEffect(() => {
-    if (address) {
-      console.log("converting");
-      safeConvertAddressSS58(address, 7);
-    }
-  }, [address]);
-
-  const { accounts } = usePolkadotWeb3();
-  console.log({ accounts });
+  const handlePolkadotAddressChange = (e: any) =>
+    onChangeAddress(e.target.value); // handleChange
 
   const handleClickConnectWallet = () => {
     open();
   };
-
-  console.log({ addresses });
 
   return (
     <div>
@@ -293,9 +409,30 @@ const ConnectWalletView = ({ onBack, onContinue }: DownloadViewProps) => {
           </p>
           <p className="font-bold mb-2 ml-2">connect nova wallet</p>
         </div>
-        <div className="flex flex-col items-center">
-          <div className="py-12">
-            <PolkadotButton />
+        <div className="flex flex-col items-center w-full">
+          <div className="py-12 flex flex-col items-center w-full">
+            <div>
+              <PolkadotButton onConnectAccount={onConnectAccount} />
+            </div>
+            <div className="w-full ">
+              <p className="text-teal-400 py-4 text-center font-nimbus-sans-extended text-base font-normal">
+                or
+              </p>
+              <p
+                className="text-white text-center mb-4 font-nimbus-sans-extended text-base font-normal"
+                onClick={handleClickConnectWallet}
+              >
+                copy paste nova wallet address here
+              </p>
+              <div className="w-full">
+                <input
+                  type="text"
+                  value={address}
+                  onChange={handlePolkadotAddressChange}
+                  className="focus:placeholder-opacity-25 boder-solid border-teal-400 border-2 px-4 py-4 text-white placeholder-white w-full bg-inherit font-nimbus-sans-extended  font-normal focus:outline-none text-sm"
+                />
+              </div>
+            </div>
           </div>
         </div>
 
@@ -303,7 +440,9 @@ const ConnectWalletView = ({ onBack, onContinue }: DownloadViewProps) => {
       </div>
       <div className="pt-12 w-full flex justify-between">
         <CustomButton onClick={onBack}>back</CustomButton>
-        <CustomButton onClick={onContinue}>continue</CustomButton>
+        <CustomButton isLoading={isContinueLoading} onClick={onContinue}>
+          continue
+        </CustomButton>
       </div>
     </div>
   );
