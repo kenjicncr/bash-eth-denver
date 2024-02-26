@@ -18,7 +18,7 @@ const params = {
       chains: [
         "polkadot:91b171bb158e2d3848fa23a9f1c25182", // polkadot
       ],
-      events: ['chainChanged", "accountsChanged'],
+      events: ["chainChanged", "accountsChanged"],
     },
   },
 };
