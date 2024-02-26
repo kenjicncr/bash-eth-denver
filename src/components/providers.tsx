@@ -3,7 +3,7 @@
 import React, { ReactNode } from "react";
 import { config, projectId } from "@/lib/wagmi/config";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import {NextUIProvider} from "@nextui-org/react";
+import { NextUIProvider } from "@nextui-org/react";
 import { State, WagmiProvider } from "wagmi";
 import { UniversalConnectProvider } from "./universal-connect-provider";
 
