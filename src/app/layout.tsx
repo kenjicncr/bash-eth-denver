@@ -11,7 +11,7 @@ import { Header } from "@/components/header";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "{Bash}",
+  title: "{bash}",
   description: "records and events for artists and their communities",
 };
 
