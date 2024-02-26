@@ -8,15 +8,27 @@ import {
   safeConvertAddressSS58,
   usePolkadotWeb3,
 } from "@/lib/polkadot/hooks/usePolkadotAccounts";
-import { PolkadotButton } from "./polkadot-button";
+import { PolkadotButtonModal } from "./polkadot-button-modal";
 import { TokenProofResponse, TokenproofButton } from "./tokenproof-button";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { updateUser } from "@/lib/api/update-user";
 import { error } from "console";
 import { isValidAddressPolkadotAddress } from "@/lib/polkadot/utils";
+
+import appStore from "@/assets/icons/app-store.png";
+import googlePlay from "@/assets/icons/google-play.png";
+import { DownloadNovaModal } from "./download-nova-modal";
+import { DownloadSubwalletModal } from "./download-subwallet-modal";
+
 export const Registration = () => {
-  type View = "email" | "download" | "connect" | "tokenproof" | "success";
+  type View =
+    | "email"
+    | "download"
+    | "connect"
+    | "tokenproof"
+    | "success"
+    | "notethdenver";
 
   const [currentView, setCurrentView] = useState<View>("email");
 
@@ -30,7 +42,7 @@ export const Registration = () => {
     onSuccess: (data) => {
       console.log({ data });
       setEmail(data.user.email);
-      setCurrentView("download");
+      setCurrentView("tokenproof");
     },
     mutationKey: ["update-user-email", email],
   });
@@ -48,11 +60,15 @@ export const Registration = () => {
     onSuccess: (data) => {
       console.log({ data });
       // setPolkadotAddress(polkadotAddress);
-      setCurrentView("tokenproof");
+      toast.success("Thank you! You're all set.", {
+        duration: 20000,
+        dismissible: true,
+        position: "top-right",
+      });
     },
     onError: (error) => {
       toast.error(error.message, {
-        position: "bottom-center",
+        position: "top-right",
         duration: 10000,
         dismissible: true,
       });
@@ -73,7 +89,9 @@ export const Registration = () => {
     if (isValidAddressPolkadotAddress(polkadotAddress)) {
       submitNovaWalletMutation.mutate(polkadotAddress);
     } else {
-      toast.error("Not a valid polkadot address");
+      toast.error("Not a valid polkadot address", {
+        position: "top-right",
+      });
     }
   };
 
@@ -87,12 +105,13 @@ export const Registration = () => {
     },
     onSuccess: (data) => {
       console.log({ data });
-      setCurrentView("success");
+      setCurrentView("download");
     },
     onError: (error) => {
       toast.error(error.message, {
         duration: 20000,
         dismissible: true,
+        position: "top-right",
       });
     },
   });
@@ -102,11 +121,6 @@ export const Registration = () => {
   };
 
   /** --- end tokenproof submission --- */
-
-  const handleContinueDownload = () => {
-    setCurrentView("connect");
-  };
-
   const handleBack = ({ goBackTo }: { goBackTo: View }) => {
     setCurrentView(goBackTo);
   };
@@ -116,11 +130,12 @@ export const Registration = () => {
       case "tokenproof":
         return (
           <TokenproofView
-            onBack={() => handleBack({ goBackTo: "connect" })}
+            onBack={() => handleBack({ goBackTo: "email" })}
             onSuccess={handleTokenProofSuccess}
+            onContinueWithNoTokenProof={() => setCurrentView("notethdenver")}
             onError={(message) =>
               toast.error(message, {
-                position: "bottom-center",
+                position: "top-right",
                 duration: 10000,
               })
             }
@@ -129,23 +144,25 @@ export const Registration = () => {
       case "download":
         return (
           <DownloadView
-            onBack={() => handleBack({ goBackTo: "email" })}
-            onContinue={handleContinueDownload}
-          />
-        );
-      case "connect":
-        return (
-          <ConnectWalletView
-            address={polkadotAddress}
+            onBack={() => handleBack({ goBackTo: "tokenproof" })}
+            onContinue={handleOnContinueConnect}
             onChangeAddress={handleChangePolkadotAddress}
             onConnectAccount={handleConnectNovaWallet}
-            onContinue={handleOnContinueConnect}
-            onBack={() => handleBack({ goBackTo: "download" })}
-            isContinueLoading={submitNovaWalletMutation.isPending}
+            address={polkadotAddress}
+            isSubmitLoading={submitNovaWalletMutation.isPending}
           />
         );
-      case "success":
-        return <SuccessView onBack={() => handleBack({ goBackTo: "email" })} />;
+      case "notethdenver":
+        return (
+          <NotEthDenverAttendeeView
+            onBack={() => handleBack({ goBackTo: "tokenproof" })}
+            onContinue={handleOnContinueConnect}
+            onChangeAddress={handleChangePolkadotAddress}
+            onConnectAccount={handleConnectNovaWallet}
+            address={polkadotAddress}
+            isSubmitLoading={submitNovaWalletMutation.isPending}
+          />
+        );
       default:
         return (
           <EmailView
@@ -157,8 +174,9 @@ export const Registration = () => {
         );
     }
   };
+
   return (
-    <div className="max-w-md w-full">
+    <div className="max-w-xl w-full">
       <div className="flex justify-start items-end">
         <Image
           src="/bash.svg"
@@ -172,11 +190,6 @@ export const Registration = () => {
           ticket registration
         </p>
       </div>
-      {currentView === "success" && (
-        <p className="font-bold mb-2 mt-4 text-2xl text-yellow-400">
-          Congrats! You’re in for March 02.
-        </p>
-      )}
       <div className="pt-8">{renderRegistrationView()}</div>
     </div>
   );
@@ -223,9 +236,12 @@ const EmailView = ({
 
   return (
     <div>
-      <p className="text-teal-400 font-nimbus-sans-extended text-base font-normal">
-        Step 1 of 4:
-      </p>
+      <div className="flex flex-col lg:flex-row gap-2">
+        <p className="text-teal-400 font-nimbus-sans-extended text-base font-normal">
+          Step 1 of 3:
+        </p>
+        <p className="font-bold mb-2">register</p>
+      </div>
       <div className="relative">
         <input
           type="email"
@@ -258,6 +274,7 @@ const EmailView = ({
 
 interface TokenproofViewProps {
   onContinue?: () => void;
+  onContinueWithNoTokenProof: () => void;
   onBack: () => void;
   onSuccess: (account: string) => void;
   onError?: (message: string) => void;
@@ -267,6 +284,7 @@ const TokenproofView = ({
   onBack,
   onSuccess,
   onError,
+  onContinueWithNoTokenProof,
 }: TokenproofViewProps) => {
   const [isRendered, setIsRendered] = useState(false);
 
@@ -317,16 +335,31 @@ const TokenproofView = ({
 
   return (
     <div>
-      <div className="flex">
+      <div className="flex flex-col lg:flex-row gap-2">
         <p className="text-teal-400 font-nimbus-sans-extended text-base font-normal">
-          Step 3 of 3:
+          Step 2 of 3:
         </p>
-        <p className="font-bold mb-2 ml-2">
-          verify with tokenproof to claim ticket
+        <p className="font-bold mb-2">
+          verify with tokenproof to claim ticket now
         </p>
       </div>
-      <div className="py-12">
+      <p className="text-yellow-500">{`Congrats you're on the waitlist!`}</p>
+      <p className="py-4 font-bold font-display text-lg">
+        Are you an ETH Denver attendee?
+      </p>
+      <p>
+        Skip the line by connecting your Tokenproof account. We{`'`}ll airdrop
+        you your <span className="text-yellow-500">VIP ticket.</span>
+      </p>
+      <div className="py-12 flex flex-col items-center">
         <TokenproofButton onAuthenticate={handleTokenProofOnAuthenticate} />
+        <button
+          onClick={onContinueWithNoTokenProof}
+          className="mt-4 text-gray-400 text-sm underline"
+        >
+          Not an ETH Denver attendee? Click here to download our partner apps
+          for a Bash ticket
+        </button>
       </div>
       <div className="w-274 h-1 bg-gradient-to-r from-transparent via-white to-transparent" />
       {accountQuery.data && <p>{accountQuery.data.account}</p>}
@@ -340,126 +373,36 @@ const TokenproofView = ({
 type DownloadViewProps = {
   onContinue: () => void;
   onBack: () => void;
-};
-
-const DownloadView = ({ onBack, onContinue }: DownloadViewProps) => {
-  return (
-    <div>
-      <div>
-        <div className="flex">
-          <p className="text-teal-400 font-nimbus-sans-extended text-base font-normal">
-            Step 2 of 4:
-          </p>
-          <p className="font-bold mb-2 ml-2">download nova wallet on mobile</p>
-        </div>
-        <div className="flex flex-col items-center">
-          <p className="mb-2">scan qr code to download</p>
-          <Image src="/nova-qr.png" alt="qr code" width={200} height={200} />
-          <p className="py-4">or visit</p>
-          <div className="mb-4">
-            <a
-              href="https://novawallet.io/"
-              target="_blank"
-              rel="noopener noreferrer nofollow"
-              className="underline"
-            >
-              https://novawallet.io/
-            </a>
-          </div>
-        </div>
-
-        <div className="w-274 h-1 bg-gradient-to-r from-transparent via-white to-transparent" />
-      </div>
-      <div className="pt-4  w-full flex justify-between">
-        <div />
-        <p className="text-gray-100 text-sm mb-2">
-          {" "}
-          {`I have installed nova wallet`}
-        </p>
-      </div>
-      <div className=" w-full flex justify-between">
-        <CustomButton onClick={onBack}>back</CustomButton>
-        <div className="relative">
-          <CustomButton onClick={onContinue}>continue</CustomButton>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-interface ConnectWalletViewProps {
-  onBack: () => void;
-  onContinue: () => void;
-  address: string;
+  isTokenproofValid?: boolean;
   onConnectAccount: (address: string) => void;
   onChangeAddress: (address: string) => void;
-  isContinueLoading: boolean;
-}
-const ConnectWalletView = ({
+  address: string;
+  isSubmitLoading: boolean;
+};
+
+const DownloadView = ({
   onBack,
   onContinue,
+  isTokenproofValid,
   onConnectAccount,
   onChangeAddress,
   address,
-  isContinueLoading,
-}: ConnectWalletViewProps) => {
-  const { address: activeAddress, addresses } = useAccount();
-
-  const handlePolkadotAddressChange = (e: any) =>
-    onChangeAddress(e.target.value); // handleChange
-
+  isSubmitLoading,
+}: DownloadViewProps) => {
   return (
     <div>
       <div>
-        <div className="flex">
+        <div className="flex flex-col lg:flex-row gap-2">
           <p className="text-teal-400 font-nimbus-sans-extended text-base font-normal">
-            Step 2 of 3:
+            Step 3 of 3:
           </p>
-          <p className="font-bold mb-2 ml-2">connect nova wallet</p>
+          <p className="font-bold mb-2">
+            download a polkadot wallet for hidden rewards 👀
+          </p>
         </div>
-        <div className="flex flex-col items-center w-full">
-          <div className="py-12 flex flex-col items-center w-full">
-            <div>
-              <PolkadotButton onConnectAccount={onConnectAccount} />
-            </div>
-            <div className="w-full ">
-              <p className="text-teal-400 py-4 text-center font-nimbus-sans-extended text-base font-normal">
-                or
-              </p>
-              <p className="text-white text-center mb-4 font-nimbus-sans-extended text-base font-normal">
-                copy paste nova wallet address here
-              </p>
-              <div className="w-full">
-                <input
-                  type="text"
-                  value={address}
-                  onChange={handlePolkadotAddressChange}
-                  className="focus:placeholder-opacity-25 boder-solid border-teal-400 border-2 px-4 py-4 text-white placeholder-white w-full bg-inherit font-nimbus-sans-extended  font-normal focus:outline-none text-sm"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="w-274 h-1 bg-gradient-to-r from-transparent via-white to-transparent" />
-      </div>
-      <div className="pt-12 w-full flex justify-between">
-        <CustomButton onClick={onBack}>back</CustomButton>
-        <CustomButton isLoading={isContinueLoading} onClick={onContinue}>
-          continue
-        </CustomButton>
-      </div>
-    </div>
-  );
-};
-
-type SuccessViewProps = {
-  onBack: () => void;
-};
-const SuccessView = ({ onBack }: SuccessViewProps) => {
-  return (
-    <div>
-      <div>
+        <p className="font-bold text-2xl text-[#f0e68c] pt-4">
+          Congrats! You’re in for March 02.
+        </p>
         <div className="flex">
           <p className="mb-2">
             Check your Tokenproof app for the{" "}
@@ -467,21 +410,141 @@ const SuccessView = ({ onBack }: SuccessViewProps) => {
             details.
           </p>
         </div>
-        <div className="w-274 h-1 bg-gradient-to-r from-transparent via-white to-transparent" />
-        <div className="flex flex-col pt-12">
-          <p className="text-teal-600 text-xl">
-            {" "}
+        <div className="my-4 w-274 h-1 bg-gradient-to-r from-transparent via-white to-transparent" />
+        <div className="flex flex-col">
+          <p className="text-teal-300 text-xl text-center">
             You’re eligible for hidden rewards!{" "}
           </p>
-          <p className="text-gray-500 text-md font-normal">
-            Keep your Nova wallet handy during and after the event. We’ll be
-            dropping you all sorts of cool things. You’ll also need to show this
-            for entry to venue.
+          <p className="text-gray-100 text-md text-center font-normal">
+            Our sponsor polkadot will be dropping cool things during and after
+            the event.{" "}
+          </p>
+          <p className="font-bold mt-1 text-center ">
+            We guarantee you do not want to miss this.
           </p>
         </div>
+        <div className="flex flex-col items-center py-4">
+          <div className="flex flex-col lg:flex-row justify-center items-center gap-4">
+            <DownloadNovaModal />
+            <p className="text-center">or</p>
+            <DownloadSubwalletModal />
+          </div>
+        </div>
+        <div className="w-274 h-1 bg-gradient-to-r from-transparent via-white to-transparent" />
+        <div className="flex flex-col items-center w-full">
+          <div className="py-4 flex flex-col items-center w-full">
+            <p className="text-gray-100 text-sm mb-2">
+              {" "}
+              {`Already installed a polkadot wallet?`}
+            </p>
+            <div>
+              <PolkadotButtonModal onConnectAccount={onConnectAccount} />
+            </div>
+            <div className="w-full ">
+              <p className="text-teal-400 py-2 text-center font-nimbus-sans-extended text-base font-normal">
+                or
+              </p>
+              <p className="text-white text-center mb-4 font-nimbus-sans-extended text-base font-normal">
+                copy paste polkadot wallet address you created here
+              </p>
+              <div className="w-full">
+                <input
+                  type="text"
+                  value={address}
+                  onChange={(e: any) => onChangeAddress(e.target.value)}
+                  className="focus:placeholder-opacity-25 boder-solid border-teal-400 border-2 px-4 py-4 text-white placeholder-white w-full bg-inherit font-nimbus-sans-extended  font-normal focus:outline-none text-sm"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="pt-12 w-full flex justify-between">
+      <div className="pt-4 w-full flex justify-between">
         <CustomButton onClick={onBack}>back</CustomButton>
+        <CustomButton isLoading={isSubmitLoading} onClick={onContinue}>
+          submit for hidden rewards
+        </CustomButton>
+      </div>
+    </div>
+  );
+};
+
+type NotEthDenverAttendeeViewProps = {
+  onBack: () => void;
+  onConnectAccount: (address: string) => void;
+  onChangeAddress: (address: string) => void;
+  address: string;
+  isSubmitLoading: boolean;
+  onContinue: () => void;
+};
+const NotEthDenverAttendeeView = ({
+  onBack,
+  onConnectAccount,
+  onChangeAddress,
+  address,
+  isSubmitLoading,
+  onContinue,
+}: NotEthDenverAttendeeViewProps) => {
+  return (
+    <div>
+      <div>
+        <div>
+          <div className="flex flex-col lg:flex-row gap-2">
+            <p className="text-teal-400 font-nimbus-sans-extended text-base font-normal">
+              Step 3 of 3:
+            </p>
+            <p className="font-bold mb-2">
+              download a polkadot wallet and show at the door for entry
+            </p>
+          </div>
+          <p className="text-gray-100 text-md font-normal">
+            Please note, only ETH Denver participants are eligble for the hidden
+            rewards and special perks inside the event.
+          </p>
+          <div className="my-4 w-274 h-1 bg-gradient-to-r from-transparent via-white to-transparent" />
+          <div className="flex flex-col items-center py-4">
+            <div className="flex flex-col lg:flex-row justify-center items-center gap-4">
+              <DownloadNovaModal />
+              <p className="text-center">or</p>
+              <DownloadSubwalletModal />
+            </div>
+          </div>
+          <div className="flex flex-col items-center w-full">
+            <div className="py-4 flex flex-col items-center w-full">
+              <p className="text-gray-100 text-sm mb-2">
+                {" "}
+                {`Already installed a polkadot wallet?`}
+              </p>
+              <div>
+                <PolkadotButtonModal onConnectAccount={onConnectAccount} />
+              </div>
+              <div className="w-full ">
+                <p className="text-teal-400 py-2 text-center font-nimbus-sans-extended text-base font-normal">
+                  or
+                </p>
+                <p className="text-white text-center mb-4 font-nimbus-sans-extended text-base font-normal">
+                  copy paste polkadot wallet address you created here
+                </p>
+                <div className="w-full">
+                  <input
+                    type="text"
+                    value={address}
+                    onChange={(e: any) => onChangeAddress(e.target.value)}
+                    className="focus:placeholder-opacity-25 boder-solid border-teal-400 border-2 px-4 py-4 text-white placeholder-white w-full bg-inherit font-nimbus-sans-extended  font-normal focus:outline-none text-sm"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="w-274 h-1 bg-gradient-to-r from-transparent via-white to-transparent" />
+
+        <div className="pt-4 w-full flex justify-between">
+          <CustomButton onClick={onBack}>back</CustomButton>
+          <CustomButton isLoading={isSubmitLoading} onClick={onContinue}>
+            submit for hidden rewards
+          </CustomButton>
+        </div>
       </div>
     </div>
   );

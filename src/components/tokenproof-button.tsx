@@ -60,7 +60,7 @@ export const TokenproofButton = ({ onAuthenticate }: TokenproofButtonProps) => {
           <Image src={logo} alt="token proof" height={20} width={20} />
         )}
 
-        <span className="ml-2 tracking-wide">Authenticate with tokenproof</span>
+        <span className="ml-2 tracking-wide">Claim ticket with tokenproof</span>
       </button>
     </div>
   );
