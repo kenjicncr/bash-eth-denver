@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@nextui-org/react": "^2.2.9",
     "@polkadot/extension-dapp": "^0.46.6",
     "@polkadot/extension-inject": "^0.46.6",
     "@polkadot/keyring": "^12.6.2",

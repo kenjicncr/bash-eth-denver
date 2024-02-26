@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { cookieToInitialState } from "wagmi";
 import { headers } from "next/headers";
-
 import "./globals.css";
 import { config } from "@/lib/wagmi/config";
 import { Providers } from "@/components/providers";
@@ -24,12 +23,12 @@ export default function RootLayout({
   const initialState = cookieToInitialState(config, headers().get("cookie"));
 
   return (
-    <html lang="en">
-      <body className="bg-gradient-to-t">
-        <Header />
-        <Toaster />
-        <Providers initialState={initialState}>{children}</Providers>
-      </body>
-    </html>
+      <html lang="en">
+        <body className="bg-gradient-to-t">
+          <Header />
+          <Toaster />
+          <Providers initialState={initialState}>{children}</Providers>
+        </body>
+      </html>
   );
 }

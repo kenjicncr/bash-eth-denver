@@ -2,9 +2,8 @@
 
 import React, { ReactNode } from "react";
 import { config, projectId } from "@/lib/wagmi/config";
-
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
+import {NextUIProvider} from "@nextui-org/react";
 import { State, WagmiProvider } from "wagmi";
 import { UniversalConnectProvider } from "./universal-connect-provider";
 
@@ -24,7 +23,7 @@ export function Providers({
     <WagmiProvider config={config} initialState={initialState}>
       <UniversalConnectProvider>
         <QueryClientProvider client={queryClient}>
-          {children}
+          <NextUIProvider>{children}</NextUIProvider>
         </QueryClientProvider>
       </UniversalConnectProvider>
     </WagmiProvider>
