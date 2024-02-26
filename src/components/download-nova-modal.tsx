@@ -43,18 +43,26 @@ export const DownloadNovaModal = ({
             <div className="grid grid-cols-2 gap-8">
               <div className="grid gap-4">
                 <Image src={novaAppleQr} alt="nova apple qr code download" />
-                <button>
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer nofollow"
+                  href="https://apps.apple.com/us/app/nova-polkadot-wallet/id1597119355?utm_source=bash.audio&utm_medium=referral&utm_campaign=app_download&utm_content=app_store_link"
+                >
                   <Image src={appStore} alt="nova apple app store download" />
-                </button>
+                </a>
               </div>
               <div className="grid gap-4">
                 <Image
                   src={novaAndroidQr}
                   alt="nova android qr code download"
                 />
-                <button>
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer nofollow"
+                  href="https://play.google.com/store/apps/details?id=io.novafoundation.nova.market?utm_source=bash.audio&utm_medium=referral&utm_campaign=app_download&utm_content=app_store_link"
+                >
                   <Image src={googlePlay} alt="nova google play download" />
-                </button>
+                </a>
               </div>
             </div>
           </DialogDescription>
