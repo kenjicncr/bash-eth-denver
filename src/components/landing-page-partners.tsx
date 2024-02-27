@@ -159,7 +159,7 @@ const fadeIn: Variants = {
 
 export const LandingPagePartners = () => {
   return (
-    <section className="mx-auto w-full max-w-7xl px-6 mt-10 z-100">
+    <section className="mx-auto w-full max-w-7xl px-6 mt-20 z-100">
       <motion.div
         variants={scrollInLeft}
         initial="offscreen"
