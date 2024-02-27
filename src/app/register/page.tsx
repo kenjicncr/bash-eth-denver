@@ -9,7 +9,6 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
-      <Script id="luma-checkout" src="https://embed.lu.ma/checkout-button.js" />
       <Script
         id="tokenproof"
         src="https://cdn.tokenproof.xyz/js/tokenproof-oa-widget-v1.0.js"

@@ -172,7 +172,7 @@ export const PolkadotButtonModal = ({
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] bg-black border-teal-400">
         <DialogHeader>
-          <DialogTitle>Download Subwallet</DialogTitle>
+          <DialogTitle>Select Wallet</DialogTitle>
         </DialogHeader>
         <div className="flex flex-col gap-4">
           <button

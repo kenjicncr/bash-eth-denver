@@ -9,6 +9,7 @@ import {
   usePolkadotWeb3,
 } from "@/lib/polkadot/hooks/usePolkadotAccounts";
 import { PolkadotButtonModal } from "./polkadot-button-modal";
+import { PolkadotButtonModal } from "./polkadot-button-modal";
 import { TokenProofResponse, TokenproofButton } from "./tokenproof-button";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -21,7 +22,20 @@ import googlePlay from "@/assets/icons/google-play.png";
 import { DownloadNovaModal } from "./download-nova-modal";
 import { DownloadSubwalletModal } from "./download-subwallet-modal";
 
+
+import appStore from "@/assets/icons/app-store.png";
+import googlePlay from "@/assets/icons/google-play.png";
+import { DownloadNovaModal } from "./download-nova-modal";
+import { DownloadSubwalletModal } from "./download-subwallet-modal";
+
 export const Registration = () => {
+  type View =
+    | "email"
+    | "download"
+    | "connect"
+    | "tokenproof"
+    | "success"
+    | "notethdenver";
   type View =
     | "email"
     | "download"
@@ -43,6 +57,7 @@ export const Registration = () => {
       console.log({ data });
       setEmail(data.user.email);
       setCurrentView("tokenproof");
+      setCurrentView("tokenproof");
     },
     mutationKey: ["update-user-email", email],
   });
@@ -63,12 +78,12 @@ export const Registration = () => {
       toast.success("Thank you! You're all set.", {
         duration: 20000,
         dismissible: true,
-        position: "top-right",
+        position: "top-center",
       });
     },
     onError: (error) => {
       toast.error(error.message, {
-        position: "top-right",
+        position: "top-center",
         duration: 10000,
         dismissible: true,
       });
@@ -90,7 +105,7 @@ export const Registration = () => {
       submitNovaWalletMutation.mutate(polkadotAddress);
     } else {
       toast.error("Not a valid polkadot address", {
-        position: "top-right",
+        position: "top-center",
       });
     }
   };
@@ -108,10 +123,11 @@ export const Registration = () => {
       setCurrentView("download");
     },
     onError: (error) => {
+      setCurrentView("download");
       toast.error(error.message, {
         duration: 20000,
         dismissible: true,
-        position: "top-right",
+        position: "top-center",
       });
     },
   });
@@ -133,12 +149,13 @@ export const Registration = () => {
             onBack={() => handleBack({ goBackTo: "email" })}
             onSuccess={handleTokenProofSuccess}
             onContinueWithNoTokenProof={() => setCurrentView("notethdenver")}
-            onError={(message) =>
+            onError={(message) => {
+              setCurrentView("download");
               toast.error(message, {
-                position: "top-right",
+                position: "top-center",
                 duration: 10000,
-              })
-            }
+              });
+            }}
           />
         );
       case "download":
@@ -362,7 +379,6 @@ const TokenproofView = ({
         </button>
       </div>
       <div className="w-274 h-1 bg-gradient-to-r from-transparent via-white to-transparent" />
-      {accountQuery.data && <p>{accountQuery.data.account}</p>}
       <div className="pt-12 w-full flex justify-between">
         <CustomButton onClick={onBack}>back</CustomButton>
       </div>
