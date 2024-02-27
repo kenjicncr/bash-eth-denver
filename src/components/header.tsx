@@ -1,28 +1,139 @@
-import Link from "next/link";
-import Image from "next/image";
-import logo from "@/assets/logos/bash-logo.svg";
+"use client";
 
-export const Header = () => {
+import logo from "@/assets/logos/bash-logo.svg";
+import Image from "next/image";
+import {
+  Navbar,
+  NavbarBrand,
+  NavbarContent,
+  NavbarItem,
+  NavbarMenu,
+  NavbarMenuItem,
+  NavbarMenuToggle,
+  Link,
+  Button,
+} from "@nextui-org/react";
+import type { NavbarProps } from "@nextui-org/react";
+import { useState } from "react";
+
+export const Header = (props: NavbarProps) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
-    <header className="absolute w-full bg-transparent text-white py-4 px-2 lg:p-4 flex justify-center">
-      <div className="flex justify-between items-center margin-auto max-w-screen-2xl w-full">
-        <div>
+    <Navbar
+      {...props}
+      isMenuOpen={isMenuOpen}
+      onMenuOpenChange={setIsMenuOpen}
+      classNames={{
+        base: "py-4 backdrop-filter-none bg-transparent",
+        wrapper: "px-0 w-full justify-center bg-transparent",
+        item: "hidden md:flex",
+      }}
+      height="54px"
+    >
+      <NavbarContent
+        className="relative gap-8 rounded-md border-small border-default-200/20 bg-background/60 px-2 shadow-medium backdrop-blur-md backdrop-saturate-150 dark:bg-default-100/50"
+        justify="center"
+      >
+        {/* Toggle */}
+        <NavbarMenuToggle
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          className="ml-2 text-default-500 md:hidden"
+        />
+
+        {/* Logo */}
+        <NavbarBrand className="mr-2 w-[40vw] md:w-auto md:max-w-fit">
           <Link href="/">
-            <Image src={logo} alt="Logo" className="h-6 lg:h-8" />
+            <Image
+              src={logo}
+              alt="Logo"
+              width={70}
+              className="ml-2 hover:text-primary-300"
+            />
           </Link>
-        </div>
-        <nav>
-          <Link href="/register" className="mr-4">
-            join
+        </NavbarBrand>
+
+        {/* Items */}
+        <NavbarItem className="hidden md:flex">
+          <Link
+            className="text-default-500 hover:text-primary-300"
+            href="/#about"
+            size="sm"
+          >
+            About
           </Link>
-          <Link href="/#events" className="mr-4">
-            events
+        </NavbarItem>
+        <NavbarItem>
+          <Link
+            className="text-default-500 hover:text-primary-300"
+            href="/#events"
+            size="sm"
+          >
+            Events
           </Link>
-          <Link href="/#releases" className="mr-4">
-            releases
+        </NavbarItem>
+        <NavbarItem>
+          <Link
+            className="text-default-500 hover:text-primary-300"
+            href="/#releases"
+            size="sm"
+          >
+            Releases
           </Link>
-        </nav>
-      </div>
-    </header>
+        </NavbarItem>
+        <NavbarItem className="ml-2 !flex">
+          <Link href="/register" size="sm">
+            <Button
+              radius="sm"
+              variant="flat"
+              className="opacity-100 hover:text-primary-300 hover:text-opacity-100"
+            >
+              Register
+            </Button>
+          </Link>
+        </NavbarItem>
+
+        {/* Menu */}
+        <NavbarMenu
+          className="absolute top-[calc(var(--navbar-height)/2)] mx-auto max-w-[90vw] mt-16 max-h-[fit-content] rounded-md border-small border-default-200/20 bg-background/60 py-4 shadow-medium backdrop-blur-md backdrop-saturate-150 dark:bg-default-100/50"
+          motionProps={{
+            initial: { opacity: 0, y: -20 },
+            animate: { opacity: 1, y: 0 },
+            exit: { opacity: 0, y: -20 },
+            transition: {
+              ease: "easeInOut",
+              duration: 0.2,
+            },
+          }}
+        >
+          <NavbarMenuItem>
+            <Link
+              className="w-full text-default-500 py-2"
+              href="/#about"
+              size="md"
+              onPress={() => setIsMenuOpen(false)}
+            >
+              About
+            </Link>
+            <Link
+              className="w-full text-default-500 py-2"
+              href="/#events"
+              size="md"
+              onPress={() => setIsMenuOpen(false)}
+            >
+              Events
+            </Link>
+            <Link
+              className="w-full text-default-500 py-2"
+              href="/#releases"
+              size="md"
+              onPress={() => setIsMenuOpen(false)}
+            >
+              Releases
+            </Link>
+          </NavbarMenuItem>
+        </NavbarMenu>
+      </NavbarContent>
+    </Navbar>
   );
 };

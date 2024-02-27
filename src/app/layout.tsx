@@ -23,12 +23,12 @@ export default function RootLayout({
   const initialState = cookieToInitialState(config, headers().get("cookie"));
 
   return (
-      <html lang="en">
-        <body className="bg-gradient-to-t">
-          <Header />
-          <Toaster />
-          <Providers initialState={initialState}>{children}</Providers>
-        </body>
-      </html>
+    <html lang="en" className="dark">
+      <Providers initialState={initialState}>
+        <Header />
+        <Toaster />
+        {children}
+      </Providers>
+    </html>
   );
 }
