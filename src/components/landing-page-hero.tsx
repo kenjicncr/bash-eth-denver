@@ -15,19 +15,19 @@ export const LandingPageHero = () => {
     },
   };
 
-  const presentingVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { delay: 0.5 }, // Customize delay for "Presenting"
-    },
-  };
-
   const closingPartyVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { delay: 1.5 }, // Customize delay for "The Official Eth Denver Closing Party"
+      transition: { staggerChildren: 0.5 }, // Customize delay for "The Official Eth Denver Closing Party"
+    },
+  };
+
+  const childVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { duration: 0.5 }, // Customize as needed
     },
   };
 
@@ -63,7 +63,7 @@ export const LandingPageHero = () => {
               transparent 100%
             ),
             /* Bottom fade */
-              linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 100%),
+              linear-gradient(to top, rgba(0, 0, 0, 1) 0%, transparent 100%),
             /* Left fade */
               linear-gradient(to right, rgba(0, 0, 0, 0.8) 0%, transparent 100%),
             /* Right fade */
@@ -84,43 +84,38 @@ export const LandingPageHero = () => {
           variants={videoVariants}
           initial="hidden"
           animate="visible"
-          className="absolute w-full h-100vh z--1"
+          className="absolute w-full h-screen z--1"
         >
-          <video autoPlay loop muted className="w-screen h-screen object-cover">
+          <video autoPlay loop muted className="w-full h-screen object-cover">
             <source src="/videos/Rave-Bash-Edit.mp4" type="video/mp4" />
           </video>
-          <div className="absolute top-0 left-0 right-0 bottom-0 z-10 custom-gradient"></div>
+          <div className="top-0 left-0 right-0 bottom-0 z-10 custom-gradient"></div>
         </motion.div>
-
-        <motion.p
-          variants={presentingVariants}
-          className="md:text-3xl text-xl text-white z-10 font-black"
-        >
-          Presenting
-        </motion.p>
-        <motion.p
+        <motion.div
           variants={closingPartyVariants}
-          className="text-xl md:text-3xl text-primary-500 z-10 mt-6 font-black"
+          initial="hidden"
+          animate="visible"
+          className="text-4xl w-full md:text-8xl text-white z-10 mt-6 px-4 md:px-10 font-black"
         >
-          The Official Eth Denver Closing Party
-        </motion.p>
+          <motion.p variants={childVariants}>The</motion.p>
+          <motion.p variants={childVariants} className="text-primary-500">
+            Official
+          </motion.p>
+          <motion.p variants={childVariants}>Eth Denver</motion.p>
+          <motion.p variants={childVariants}>Closing Party</motion.p>
+        </motion.div>
         <motion.div
           variants={logoVariants}
-          className="w-full md:w-1/2 my-20 z-10"
+          className="w-full my-2 z-10 px-4 md:px-10 my-10"
         >
-          <Image
-            priority
-            className="w-[90vw] my-4 mx-auto"
-            src={logo}
-            alt="bash logo"
-          />
+          <Image priority className="w-full" src={logo} alt="bash logo" />
         </motion.div>
-        <div className="flex flex-col justify-center items-center">
+        <div className="flex flex-col justify-center mt-10 md:mt-20 items-center">
           <motion.div variants={registerButtonVariants} className="mx-auto">
             <Link href="/register">
               <Button
                 variant="solid"
-                className="text-white text-2xl px-20 py-2 rounded-full bg-primary-500"
+                className="text-white text-2xl px-10 py-2 rounded-md bg-primary-500"
                 size="lg"
               >
                 REGISTER

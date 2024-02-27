@@ -1,4 +1,6 @@
+import { fromTheme } from "tailwind-merge";
 import ScrollingBanner from "./scrolling-banner";
+import { motion } from "framer-motion";
 
 export const Logo1 = (
   <svg
@@ -116,7 +118,15 @@ const logos = [
 
 export const LandingPagePartners = () => {
   return (
-    <section className="mx-auto w-full max-w-6xl px-6 py-20 sm:py-32 lg:px-8 lg:py-40">
+    <section className="mx-auto w-full max-w-6xl px-6 z-100">
+      {/* <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        className="text-4xl w-full md:text-8xl text-white font-black  py-10"
+      >
+        Presented by:
+      </motion.div> */}
       <ScrollingBanner shouldPauseOnHover gap="40px">
         {logos.map(({ key, logo }) => (
           <div
