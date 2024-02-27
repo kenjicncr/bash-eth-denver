@@ -90,7 +90,7 @@ export const Registration = () => {
       submitNovaWalletMutation.mutate(polkadotAddress);
     } else {
       toast.error("Not a valid polkadot address", {
-        position: "top-right",
+        position: "top-center",
       });
     }
   };
