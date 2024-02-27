@@ -15,7 +15,7 @@ export const LandingPageEthDenverPosters = () => {
       />
 
       <Image
-        className="w-full md:w-1/6 md:inline"
+        className="hidden md:w-1/6 md:inline"
         src={ethDenverPoster1}
         alt="eth denver poster 1"
         priority
