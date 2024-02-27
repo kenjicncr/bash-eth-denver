@@ -79,42 +79,52 @@ const logos = [
   {
     key: "polkadot",
     logo: Logo1,
+    link: "",
   },
   {
     key: "distractive",
     logo: Logo1,
+    link: "",
   },
   {
     key: "exiled-racers",
     logo: Logo1,
+    link: "",
   },
   {
     key: "moonbeans",
     logo: Logo1,
+    link: "",
   },
   {
     key: "nova-wallet",
     logo: Logo1,
+    link: "",
   },
   {
     key: "subwallet",
     logo: Logo1,
+    link: "",
   },
   {
     key: "moonbeam",
     logo: Logo1,
+    link: "",
   },
   {
     key: "hydradx",
     logo: Logo1,
+    link: "",
   },
   {
     key: "bifrost",
     logo: Logo1,
+    link: "",
   },
   {
     key: "aleph-zero",
     logo: Logo1,
+    link: "",
   },
 ];
 
