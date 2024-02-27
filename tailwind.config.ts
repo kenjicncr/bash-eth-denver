@@ -19,6 +19,21 @@ module.exports = {
         sans: ["nimbus-sans", `sans-serif`],
         display: ["nimbus-sans-extended", `sans-serif`],
       },
+      keyframes: {
+        "scrolling-banner": {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(calc(-50% - var(--gap)/2))" },
+        },
+        "scrolling-banner-vertical": {
+          from: { transform: "translateY(0)" },
+          to: { transform: "translateY(calc(-50% - var(--gap)/2))" },
+        },
+      },
+      animation: {
+        "scrolling-banner": "scrolling-banner var(--duration) linear infinite",
+        "scrolling-banner-vertical":
+          "scrolling-banner-vertical var(--duration) linear infinite",
+      },
     },
   },
   darkMode: "class",
@@ -62,10 +77,10 @@ module.exports = {
               700: "#1592a8",
               800: "#1189a0",
               900: "#0a7891",
-              A100: '#bff2ff',
-              A200: '#8ce7ff',
-              A400: '#59dcff',
-              A700: '#40d7ff',
+              A100: "#bff2ff",
+              A200: "#8ce7ff",
+              A400: "#59dcff",
+              A700: "#40d7ff",
             },
             neutral: {
               50: "#f3f3f3",

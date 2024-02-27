@@ -25,7 +25,7 @@ export const Header = (props: NavbarProps) => {
       isMenuOpen={isMenuOpen}
       onMenuOpenChange={setIsMenuOpen}
       classNames={{
-        base: "py-4 backdrop-filter-none bg-transparent",
+        base: "py-4 backdrop-filter-none bg-transparent fixed",
         wrapper: "px-0 w-full justify-center bg-transparent",
         item: "hidden md:flex",
       }}
