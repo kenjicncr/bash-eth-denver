@@ -8,32 +8,46 @@ export const LandingPageEthDenverPosters = () => {
   return (
     <div className="flex flex-row justify-between items-center gap-x-0.2 h-auto w-full max-w-screen overflow-hidden">
       <Image
-        className="max-w-[20vw]"
+        className="w-full md:hidden"
+        src={ethDenverPoster3}
+        alt="eth denver poster 1"
+        priority
+      />
+
+      <Image
+        className="w-full md:w-1/6 md:inline"
         src={ethDenverPoster1}
         alt="eth denver poster 1"
         priority
       />
+
       <Image
-        className="max-w-[20vw]"
-        src={ethDenverPoster3}
+        className="hidden md:inline w-1/6"
+        src={ethDenverPoster2}
         alt="eth denver poster 5"
         priority
       />
       <Image
-        className="max-w-[20vw]"
-        src={ethDenverPoster2}
+        className="hidden md:inline w-1/6"
+        src={ethDenverPoster4}
         alt="eth denver poster 2"
         priority
       />
       <Image
-        className="max-w-[20vw]"
-        src={ethDenverPoster4}
+        className="hidden md:inline w-1/6"
+        src={ethDenverPoster1}
         alt="eth denver poster 4"
         priority
       />
       <Image
-        className="max-w-[20vw]"
-        src={ethDenverPoster3}
+        className="hidden md:inline w-1/6"
+        src={ethDenverPoster2}
+        alt="eth denver poster 3"
+        priority
+      />
+      <Image
+        className="hidden md:inline w-1/6"
+        src={ethDenverPoster4}
         alt="eth denver poster 3"
         priority
       />

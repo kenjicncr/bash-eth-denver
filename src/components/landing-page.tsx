@@ -15,10 +15,6 @@ export const LandingPage = () => {
 
       <LandingPagePartners />
 
-      <section className="py-24">
-        <LandingPageMarquee />
-      </section>
-
       <section className="py-24 px-4" id="events">
         <LandingPageUpcomingEvents />
       </section>
@@ -29,7 +25,11 @@ export const LandingPage = () => {
         <LandingPageArtistsSection />
       </section>
 
-      <section className="a mt-20">
+      <section className="py-20 max-w-7xl mx-auto w-full">
+        <LandingPageMarquee />
+      </section>
+
+      <section className="a max-w-6xl max-w-7xl mx-auto w-full">
         <LandingPageEthDenverPosters />
       </section>
     </div>

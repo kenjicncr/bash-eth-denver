@@ -13,6 +13,10 @@ nextjs-portal {
   }
 }
 
+.custom-black-gradient {
+  background-image: linear-gradient(to right, black 0%, transparent 15%, transparent 85%, black 100%);
+}
+
 .event-ticketing-iframe {
     background: linear-gradient(180deg, #141414 0%, #060606 100%) !important;
 }

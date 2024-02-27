@@ -106,7 +106,7 @@ export const LandingPageHero = () => {
         </motion.div>
         <motion.div
           variants={logoVariants}
-          className="w-full my-2 z-10 px-4 md:px-10 my-10"
+          className="w-full my-2 z-10 px-4 md:px-10 md:my-11"
         >
           <Image priority className="w-full" src={logo} alt="bash logo" />
         </motion.div>
