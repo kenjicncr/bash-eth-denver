@@ -21,10 +21,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const initialState = cookieToInitialState(config, headers().get("cookie"));
-
   return (
     <html lang="en" className="dark">
-      <>
+      <head>
         <link
           rel="apple-touch-icon"
           sizes="180x180"
@@ -46,7 +45,7 @@ export default function RootLayout({
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
         <meta name="msapplication-TileColor" content="#da532c" />
         <meta name="theme-color" content="#ffffff" />
-      </>
+      </head>
       <Providers initialState={initialState}>
         <Header />
         <Toaster />

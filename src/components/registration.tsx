@@ -9,33 +9,18 @@ import {
   usePolkadotWeb3,
 } from "@/lib/polkadot/hooks/usePolkadotAccounts";
 import { PolkadotButtonModal } from "./polkadot-button-modal";
-import { PolkadotButtonModal } from "./polkadot-button-modal";
 import { TokenProofResponse, TokenproofButton } from "./tokenproof-button";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { updateUser } from "@/lib/api/update-user";
 import { error } from "console";
 import { isValidAddressPolkadotAddress } from "@/lib/polkadot/utils";
-
+import { DownloadSubwalletModal } from "./download-subwallet-modal";
 import appStore from "@/assets/icons/app-store.png";
 import googlePlay from "@/assets/icons/google-play.png";
 import { DownloadNovaModal } from "./download-nova-modal";
-import { DownloadSubwalletModal } from "./download-subwallet-modal";
-
-
-import appStore from "@/assets/icons/app-store.png";
-import googlePlay from "@/assets/icons/google-play.png";
-import { DownloadNovaModal } from "./download-nova-modal";
-import { DownloadSubwalletModal } from "./download-subwallet-modal";
 
 export const Registration = () => {
-  type View =
-    | "email"
-    | "download"
-    | "connect"
-    | "tokenproof"
-    | "success"
-    | "notethdenver";
   type View =
     | "email"
     | "download"
