@@ -63,12 +63,12 @@ export const Registration = () => {
       toast.success("Thank you! You're all set.", {
         duration: 20000,
         dismissible: true,
-        position: "top-right",
+        position: "top-center",
       });
     },
     onError: (error) => {
       toast.error(error.message, {
-        position: "top-right",
+        position: "top-center",
         duration: 10000,
         dismissible: true,
       });
@@ -108,10 +108,11 @@ export const Registration = () => {
       setCurrentView("download");
     },
     onError: (error) => {
+      setCurrentView("download");
       toast.error(error.message, {
         duration: 20000,
         dismissible: true,
-        position: "top-right",
+        position: "top-center",
       });
     },
   });
@@ -133,12 +134,13 @@ export const Registration = () => {
             onBack={() => handleBack({ goBackTo: "email" })}
             onSuccess={handleTokenProofSuccess}
             onContinueWithNoTokenProof={() => setCurrentView("notethdenver")}
-            onError={(message) =>
+            onError={(message) => {
+              setCurrentView("download");
               toast.error(message, {
-                position: "top-right",
+                position: "top-center",
                 duration: 10000,
-              })
-            }
+              });
+            }}
           />
         );
       case "download":
@@ -362,7 +364,6 @@ const TokenproofView = ({
         </button>
       </div>
       <div className="w-274 h-1 bg-gradient-to-r from-transparent via-white to-transparent" />
-      {accountQuery.data && <p>{accountQuery.data.account}</p>}
       <div className="pt-12 w-full flex justify-between">
         <CustomButton onClick={onBack}>back</CustomButton>
       </div>
