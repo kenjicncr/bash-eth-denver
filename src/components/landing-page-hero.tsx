@@ -111,7 +111,11 @@ export const LandingPageHero = () => {
           <Image priority className="w-full" src={logo} alt="bash logo" />
         </motion.div>
         <div className="flex flex-col justify-center mt-10 md:mt-20 items-center">
-          <motion.div variants={registerButtonVariants} className="mx-auto">
+          <motion.div
+            variants={registerButtonVariants}
+            className="mx-auto"
+            whileHover={{ scale: 1.1 }}
+          >
             <Link href="/register">
               <Button
                 variant="solid"

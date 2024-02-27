@@ -1,6 +1,8 @@
+"use client";
+
 import { fromTheme } from "tailwind-merge";
 import ScrollingBanner from "./scrolling-banner";
-import { motion } from "framer-motion";
+import { Variants, motion } from "framer-motion";
 
 export const Logo1 = (
   <svg
@@ -116,27 +118,64 @@ const logos = [
   },
 ];
 
+const scrollInLeft: Variants = {
+  offscreen: {
+    opacity: 0,
+    x: -30,
+  },
+  onscreen: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      type: "spring",
+      bounce: 0.2,
+      duration: 1,
+    },
+  },
+};
+
+const fadeIn: Variants = {
+  offscreen: {
+    opacity: 0,
+  },
+  onscreen: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      duration: 2,
+    },
+  },
+};
+
 export const LandingPagePartners = () => {
   return (
-    <section className="mx-auto w-full max-w-6xl px-6 z-100">
-      {/* <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
+    <section className="mx-auto w-full max-w-6xl px-6 mt-10 z-100">
+      <motion.div
+        variants={scrollInLeft}
+        initial="offscreen"
+        whileInView="onscreen"
+        viewport={{ once: true, amount: 0.8 }}
         className="text-4xl w-full md:text-8xl text-white font-black  py-10"
       >
         Presented by:
-      </motion.div> */}
-      <ScrollingBanner shouldPauseOnHover gap="40px">
-        {logos.map(({ key, logo }) => (
-          <div
-            key={key}
-            className="flex items-center justify-center text-foreground"
-          >
-            {logo}
-          </div>
-        ))}
-      </ScrollingBanner>
+      </motion.div>
+      <motion.div
+        variants={fadeIn}
+        initial="offscreen"
+        whileInView="onscreen"
+        viewport={{ once: true, amount: 0.8 }}
+      >
+        <ScrollingBanner shouldPauseOnHover gap="40px">
+          {logos.map(({ key, logo }) => (
+            <div
+              key={key}
+              className="flex mt-10 items-center justify-center text-foreground"
+            >
+              {logo}
+            </div>
+          ))}
+        </ScrollingBanner>
+      </motion.div>
     </section>
   );
 };
