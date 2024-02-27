@@ -29,7 +29,10 @@ export const TokenproofButton = ({ onAuthenticate }: TokenproofButtonProps) => {
         //@ts-ignore
         let tokenproof = window.tokenproof;
 
-        const appId = "20b9a646-1aa9-4d33-b776-bcb126969d9c";
+        const appId =
+          process.env.NODE_ENV === "development"
+            ? "20b9a646-1aa9-4d33-b776-bcb126969d9c"
+            : "afb7c5d9-136f-489a-8fe1-8f53f130064a";
         return tokenproof.login({ appId }) as Promise<TokenProofResponse>;
       } else {
         throw new Error("Window is undefined");

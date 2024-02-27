@@ -46,8 +46,14 @@ export async function POST(req: NextRequest) {
 }
 
 const claimTicket = async (account: string) => {
-  const eventId = "4c85a386-ead5-4051-aaba-5ea5213b7251";
-  const ticketId = "40f912df-a8ff-4c78-9597-b2c8510307c6";
+  const eventId =
+    process.env.NODE_ENV === "development"
+      ? "4c85a386-ead5-4051-aaba-5ea5213b7251"
+      : "e346179a-7b7f-4f34-a005-2c4fa73e8d3c";
+  const ticketId =
+    process.env.NODE_ENV === "development"
+      ? "40f912df-a8ff-4c78-9597-b2c8510307c6"
+      : "c57480b3-c8ff-452d-a8f0-b679da3d3a87";
 
   const claim = await fetch("https://api.tokenproof.xyz/v1/tickets/claim", {
     method: "POST",
