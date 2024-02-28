@@ -27,7 +27,7 @@ export const LandingPage = () => {
         <LandingPageArtistsSection />
       </section>
 
-      <section className="py-10 max-w-7xl mx-auto w-full">
+      <section className="py-10 max-w-8xl mx-auto w-full">
         <LandingPageMarquee />
       </section>
 

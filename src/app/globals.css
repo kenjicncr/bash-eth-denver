@@ -31,8 +31,6 @@ nextjs-portal {
 
 .item {
   position: relative;
-  width: 400px;
-  height: 400px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.1);
   cursor: pointer;

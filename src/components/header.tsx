@@ -75,10 +75,10 @@ export const Header = (props: NavbarProps) => {
         <NavbarItem>
           <Link
             className="text-default-500 hover:text-primary-300"
-            href="/#releases"
+            href="/#artists"
             size="sm"
           >
-            Releases
+            Artists
           </Link>
         </NavbarItem>
         <NavbarItem className="ml-2 !flex">
@@ -131,7 +131,7 @@ export const Header = (props: NavbarProps) => {
               size="md"
               onPress={() => setIsMenuOpen(false)}
             >
-              Releases
+              Artists
             </Link>
           </NavbarMenuItem>
         </NavbarMenu>

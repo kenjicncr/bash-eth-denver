@@ -5,7 +5,7 @@ import barry from "@/assets/posters/barry.jpeg";
 import roland from "@/assets/posters/roland.jpeg";
 import secondcityuk from "@/assets/posters/secondcityuk.jpeg";
 import antlarock from "@/assets/posters/ant-larock.png";
-import bezlandhardcore from "@/assets/posters/bezland-hardcore.jpg";
+import jadalareign from "@/assets/posters/jadalareign.jpg";
 
 export const LandingPageArtistsSection = () => {
   const [scope, animate] = useAnimate();
@@ -54,11 +54,11 @@ export const LandingPageArtistsSection = () => {
   } = createMouseHandler(animate5);
 
   return (
-    <div className="items">
+    <div className="items flex flex-wrap w-full">
       <motion.div
         onHoverStart={handleMouseEnter}
         onHoverEnd={handleMouseLeave}
-        className="item"
+        className="item w-full md:w-1/3"
       >
         <div className="item-img">
           <Image src={barry} alt="barry" />
@@ -98,10 +98,10 @@ export const LandingPageArtistsSection = () => {
       <motion.div
         onHoverStart={handleMouseEnter2}
         onHoverEnd={handleMouseLeave2}
-        className="item"
+        className="item w-full md:w-1/3"
         id="item-2"
       >
-        <div className="item-img">
+        <div className="item-img pt-100">
           <Image src={secondcityuk} alt="roland" />
         </div>
         <div ref={scope2} className="item-copy">
@@ -142,7 +142,7 @@ export const LandingPageArtistsSection = () => {
       <motion.div
         onHoverStart={handleMouseEnter3}
         onHoverEnd={handleMouseLeave3}
-        className="item"
+        className="item w-full md:w-1/3"
         id="item-3"
       >
         <div className="item-img">
@@ -186,7 +186,7 @@ export const LandingPageArtistsSection = () => {
       <motion.div
         onHoverStart={handleMouseEnter4}
         onHoverEnd={handleMouseLeave4}
-        className="item"
+        className="item w-full md:w-1/3"
         id="item-3"
       >
         <div className="item-img">
@@ -230,10 +230,10 @@ export const LandingPageArtistsSection = () => {
       <motion.div
         onHoverStart={handleMouseEnter5}
         onHoverEnd={handleMouseLeave5}
-        className="item"
+        className="item w-full md:w-1/3"
       >
         <div className="item-img">
-          <Image src={bezlandhardcore} alt="bezland" />
+          <Image src={jadalareign} alt="bezland" />
         </div>
         <div ref={scope5} className="item-copy">
           <div className="item-copy-1">
@@ -266,6 +266,9 @@ export const LandingPageArtistsSection = () => {
             </div>
           </div>
         </div>
+      </motion.div>
+      <motion.div className="item w-full md:w-1/3 bg-primary-500 flex items-end justify-end min-h-[424px]">
+        <div className="font-black text-8xl p-4">And More...</div>
       </motion.div>
     </div>
   );
