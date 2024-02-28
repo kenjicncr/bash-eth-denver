@@ -20,6 +20,8 @@ import bifrostWhite from "@/assets/brands/bifrost-white.png";
 import alephZeroWhite from "@/assets/brands/aleph-zero-white.png";
 import distractiveWhite from "@/assets/brands/distractive-white.png";
 import moonbeansWhite from "@/assets/brands/moonbeans-white.png";
+import novaWalletWhite from "@/assets/brands/nova-wallet-white.png";
+import subWalletWhite from "@/assets/brands/subwallet-white.png";
 
 export const Logo1 = (
   <svg
@@ -94,6 +96,34 @@ export const Logo1 = (
 
 const logos = [
   {
+    key: "subwallet",
+    logo: (
+      <div className="w-[250px]">
+        <Image src={subWalletWhite} alt="moonbeam logo" />
+      </div>
+    ),
+    link: "",
+  },
+  {
+    key: "nova-wallet",
+    logo: (
+      <div className="w-[250px]">
+        <Image src={novaWalletWhite} alt="nova wallet logo" />
+      </div>
+    ),
+    link: "",
+  },
+
+  {
+    key: "polkadot",
+    logo: (
+      <div className="w-[250px]">
+        <Image src={polkadotWhite} alt="exiled racers logo" />
+      </div>
+    ),
+    link: "",
+  },
+  {
     key: "distractive",
     logo: (
       <div className="w-[167px]">
@@ -106,12 +136,7 @@ const logos = [
     key: "moonbeam",
     logo: (
       <div className="w-[167px]">
-        <Image
-          src={moonbeamWhite}
-          height={50}
-          width={167}
-          alt="moonbeam logo"
-        />
+        <Image src={moonbeamWhite} alt="moonbeam logo" />
       </div>
     ),
     link: "",
@@ -132,15 +157,6 @@ const logos = [
     link: "",
   },
   {
-    key: "polkadot",
-    logo: (
-      <div className="w-[250px]">
-        <Image src={polkadotWhite} alt="exiled racers logo" />
-      </div>
-    ),
-    link: "",
-  },
-  {
     key: "moonbeans",
     logo: (
       <div className="w-[250px]">
@@ -149,27 +165,6 @@ const logos = [
     ),
     link: "",
   },
-  {
-    key: "subwallet",
-    logo: (
-      <div>
-        <Image
-          src={moonbeamWhite}
-          height={50}
-          width={167}
-          alt="moonbeam logo"
-        />
-      </div>
-    ),
-    link: "",
-  },
-  /** 
-  {
-    key: "distractive",
-    logo: PolkadotLogo,
-    link: "",
-  },
-  */
   {
     key: "hydradx",
     logo: (
@@ -193,6 +188,15 @@ const logos = [
     logo: (
       <div className="w-[250px]">
         <Image src={alephZeroWhite} alt="aleph zero logo" />
+      </div>
+    ),
+    link: "",
+  },
+  {
+    key: "polkadot",
+    logo: (
+      <div className="w-[250px]">
+        <Image src={polkadotWhite} alt="exiled racers logo" />
       </div>
     ),
     link: "",
