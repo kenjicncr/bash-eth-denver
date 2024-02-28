@@ -3,7 +3,6 @@
 import ScrollingBanner from "./scrolling-banner";
 import { Variants, motion } from "framer-motion";
 import {
-  MoonbeansLogoSmall,
   MoonbeansLogo,
 } from "../assets/logos/Moonbeans-Logo";
 
@@ -168,7 +167,7 @@ export const LandingPagePartners = () => {
         initial="offscreen"
         whileInView="onscreen"
         viewport={{ once: true, amount: 0.8 }}
-        className="text-4xl w-full md:text-8xl text-white font-black  py-10"
+        className="text-4xl w-full md:text-8xl text-white font-black py-10"
       >
         Presented by
       </motion.div>

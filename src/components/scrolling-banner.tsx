@@ -63,7 +63,7 @@ export const ScrollingBanner = React.forwardRef<
         }}
       >
         <div
-          className={cn("flex w-max items-stretch gap-[--gap]", {
+          className={cn("flex w-max items-stretch gap-[--gap] cursor-pointer", {
             "flex-col": isVertical,
             "h-full": isVertical,
             "animate-scrolling-banner": !isVertical,
