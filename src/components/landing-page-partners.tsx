@@ -1,8 +1,11 @@
 "use client";
 
-import { fromTheme } from "tailwind-merge";
 import ScrollingBanner from "./scrolling-banner";
 import { Variants, motion } from "framer-motion";
+import {
+  MoonbeansLogoSmall,
+  MoonbeansLogo,
+} from "../assets/logos/Moonbeans-Logo";
 
 export const Logo1 = (
   <svg
@@ -93,7 +96,7 @@ const logos = [
   },
   {
     key: "moonbeans",
-    logo: Logo1,
+    logo: MoonbeansLogo,
     link: "",
   },
   {
