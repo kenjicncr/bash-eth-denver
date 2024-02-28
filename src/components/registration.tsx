@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { useLocalStorage } from "react-use";
 import { CustomButton } from "./custom-button";
 import { PolkadotButtonModal } from "./polkadot-button-modal";
 import { TokenProofResponse, TokenproofButton } from "./tokenproof-button";
@@ -44,7 +45,8 @@ export const Registration = () => {
 
   const [currentView, setCurrentView] = useState<View>("email");
 
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useLocalStorage("email", "");
+  // const [email, setEmail] = useState(localEmail);
   const [polkadotAddress, setPolkadotAddress] = useState("");
 
   const submitEmailMutation = useMutation({
