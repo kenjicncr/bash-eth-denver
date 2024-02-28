@@ -19,7 +19,7 @@ export const LandingPageHero = () => {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.5 }, // Customize delay for "The Official Eth Denver Closing Party"
+      transition: { staggerChildren: 0.2 }, // Customize delay for "The Official Eth Denver Closing Party"
     },
   };
 
@@ -35,7 +35,7 @@ export const LandingPageHero = () => {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { delay: 2.5 }, // Customize delay for logo
+      transition: { delay: 1 }, // Customize delay for logo
     },
   };
 
@@ -43,7 +43,7 @@ export const LandingPageHero = () => {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { delay: 3.5 }, // Customize delay for "REGISTER" button
+      transition: { delay: 1.5 }, // Customize delay for "REGISTER" button
     },
   };
 
