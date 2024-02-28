@@ -19,7 +19,7 @@ export const LandingPage = () => {
         <LandingPageAbout />
       </section>
 
-      <section className="py-24 px-4" id="events">
+      <section className="mx-auto w-full max-w-7xl py-10" id="events">
         <LandingPageUpcomingEvents />
       </section>
 

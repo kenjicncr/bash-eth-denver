@@ -33,7 +33,6 @@ nextjs-portal {
   position: relative;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  cursor: pointer;
 }
 
 .item span {
@@ -123,8 +122,6 @@ nextjs-portal {
 
 .shape #number {
   font-family: "Orbitron";
-  font-size: 50px;
-  font-weight: 400;
   font-family: var(--font-family-nimbus_sans-bold);
 }
 

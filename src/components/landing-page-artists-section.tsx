@@ -66,30 +66,16 @@ export const LandingPageArtistsSection = () => {
         <div ref={scope} className="item-copy">
           <div className="item-copy-1">
             <div className="shape">
-              <div id="number" className="font-orbitron text-50 font-bold">
-                <span>0</span>
-                <span>1</span>
+              <div id="number" className="text-right">
+                <div className="text-6xl">01</div>
               </div>
             </div>
           </div>
           <div className="item-copy-2">
-            <div className="shape">
-              <div>
-                <span>b</span>
-                <span>a</span>
-                <span>s</span>
-                <span>h</span>
-              </div>
+            <div className="shape font-bold">
+              <div className="text-2xl">Barry Can&apos;t Swim</div>
               <div className="text-right">
-                <span>p</span>
-                <span>a</span>
-                <span>s</span>
-                <span>t /</span>
-                <span>e</span>
-                <span>v</span>
-                <span>e</span>
-                <span>n</span>
-                <span>t</span>
+                <div className="text-sm">past event</div>
               </div>
             </div>
           </div>
@@ -108,32 +94,18 @@ export const LandingPageArtistsSection = () => {
           <div className="item-copy-1">
             <div className="shape">
               <div id="number" className="text-right">
-                <span>0</span>
-                <span>2</span>
+                <div className="text-6xl">02</div>
               </div>
             </div>
           </div>
           <div className="item-copy-2">
-            <div className="shape">
-              <div className="text-right">
-                <span>b</span>
-                <span>a</span>
-                <span>s</span>
-                <span>h</span>
-                <span></span>
-                <span>0</span>
-                <span>0</span>
-                <span>2</span>
+            <div className="shape font-bold">
+              <div className="text-right pt-2">
+                <div className="text-2xl">Secondcity</div>
+                <div className="text-2xl">(UK)</div>
               </div>
               <div>
-                <span>u</span>
-                <span>p</span>
-                <span>c</span>
-                <span>o</span>
-                <span>m</span>
-                <span>i</span>
-                <span>n</span>
-                <span>g</span>
+                <div className="text-sm">March 2nd, 2024</div>
               </div>
             </div>
           </div>
@@ -152,32 +124,17 @@ export const LandingPageArtistsSection = () => {
           <div className="item-copy-1">
             <div className="shape">
               <div id="number" className="text-right">
-                <span>0</span>
-                <span>3</span>
+                <div className="text-6xl">03</div>
               </div>
             </div>
           </div>
           <div className="item-copy-3">
-            <div className="shape">
+            <div className="shape font-bold">
               <div className="text-right">
-                <span>b</span>
-                <span>a</span>
-                <span>s</span>
-                <span>h</span>
-                <span></span>
-                <span>0</span>
-                <span>0</span>
-                <span>2</span>
+                <div className="text-2xl">Roland Clark</div>
               </div>
               <div>
-                <span>u</span>
-                <span>p</span>
-                <span>c</span>
-                <span>o</span>
-                <span>m</span>
-                <span>i</span>
-                <span>n</span>
-                <span>g</span>
+                <div className="text-sm">upcoming</div>
               </div>
             </div>
           </div>
@@ -187,7 +144,7 @@ export const LandingPageArtistsSection = () => {
         onHoverStart={handleMouseEnter4}
         onHoverEnd={handleMouseLeave4}
         className="item w-full md:w-1/3"
-        id="item-3"
+        id="item-2"
       >
         <div className="item-img">
           <Image src={antlarock} alt="ant larock" />
@@ -196,32 +153,17 @@ export const LandingPageArtistsSection = () => {
           <div className="item-copy-1">
             <div className="shape">
               <div id="number" className="text-right">
-                <span>0</span>
-                <span>4</span>
+                <div className="text-6xl">04</div>
               </div>
             </div>
           </div>
           <div className="item-copy-3">
-            <div className="shape">
-              <div className="text-right">
-                <span>b</span>
-                <span>a</span>
-                <span>s</span>
-                <span>h</span>
-                <span></span>
-                <span>0</span>
-                <span>0</span>
-                <span>2</span>
+            <div className="shape font-bold">
+              <div className="text-right pt-2">
+                <div className="text-2xl">Ant LaRock</div>
               </div>
               <div>
-                <span>u</span>
-                <span>p</span>
-                <span>c</span>
-                <span>o</span>
-                <span>m</span>
-                <span>i</span>
-                <span>n</span>
-                <span>g</span>
+                <div className="text-sm">upcoming</div>
               </div>
             </div>
           </div>
@@ -238,30 +180,18 @@ export const LandingPageArtistsSection = () => {
         <div ref={scope5} className="item-copy">
           <div className="item-copy-1">
             <div className="shape">
-              <div id="number" className="font-orbitron text-50 font-bold">
-                <span>0</span>
-                <span>5</span>
+              <div id="number" className="font-orbitron text-50">
+                <div className="text-6xl">05</div>
               </div>
             </div>
           </div>
           <div className="item-copy-2">
-            <div className="shape">
+            <div className="shape font-bold">
               <div>
-                <span>b</span>
-                <span>a</span>
-                <span>s</span>
-                <span>h</span>
+                <div className="text-2xl">Jadalareign</div>
               </div>
               <div className="text-right">
-                <span>p</span>
-                <span>a</span>
-                <span>s</span>
-                <span>t /</span>
-                <span>e</span>
-                <span>v</span>
-                <span>e</span>
-                <span>n</span>
-                <span>t</span>
+                <div className="text-sm">upcoming</div>
               </div>
             </div>
           </div>
