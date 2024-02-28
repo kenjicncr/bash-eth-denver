@@ -63,14 +63,17 @@ export const ScrollingBanner = React.forwardRef<
         }}
       >
         <div
-          className={cn("flex w-max items-stretch gap-[--gap] cursor-pointer", {
-            "flex-col": isVertical,
-            "h-full": isVertical,
-            "animate-scrolling-banner": !isVertical,
-            "animate-scrolling-banner-vertical": isVertical,
-            "[animation-direction:reverse]": isReverse,
-            "hover:[animation-play-state:paused]": shouldPauseOnHover,
-          })}
+          className={cn(
+            "flex w-max items-stretch gap-[--gap]",
+            {
+              "flex-col": isVertical,
+              "h-full": isVertical,
+              "animate-scrolling-banner": !isVertical,
+              "animate-scrolling-banner-vertical": isVertical,
+              "[animation-direction:reverse]": isReverse,
+              "hover:[animation-play-state:paused]": shouldPauseOnHover,
+            }
+          )}
         >
           {React.Children.map(children, (child) =>
             React.cloneElement(child as any)

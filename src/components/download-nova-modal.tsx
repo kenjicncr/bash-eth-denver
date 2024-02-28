@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Dialog,
   DialogContent,
@@ -8,16 +10,13 @@ import {
   DialogTrigger,
   DialogClose,
 } from "@/components/ui/dialog";
-import { FaApple } from "react-icons/fa";
-import { IoLogoGooglePlaystore } from "react-icons/io5";
-
 import Image from "next/image";
-
 import novaAppleQr from "@/assets/icons/nova-qr-apple.png";
 import novaAndroidQr from "@/assets/icons/nova-qr-android.png";
-
 import appStore from "@/assets/icons/app-store.png";
 import googlePlay from "@/assets/icons/google-play.png";
+import { Button } from "@nextui-org/react";
+import NovaLogo from "@/assets/logos/nova-logo.png";
 
 interface DownloadNovaModalProps {
   onClickContinue?: () => void;
@@ -28,13 +27,16 @@ export const DownloadNovaModal = ({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button className="flex justify-center items-center h-8 px-4 py-6 flex-shrink-0 rounded-md border-2 border-pink-600 bg-pink-600">
-          <div className="grid grid-cols-2 gap-2 mr-2">
-            <FaApple />
-            <IoLogoGooglePlaystore />
-          </div>
-          Download Nova Wallet
-        </button>
+        <Button
+          radius="sm"
+          variant="flat"
+          className="opacity-100 hover:text-primary-300 hover:text-opacity-100 w-52"
+          startContent={
+            <Image src={NovaLogo} alt="token proof" height={20} width={20} />
+          }
+        >
+          Download Nova
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] bg-black border-teal-400">
         <DialogHeader>

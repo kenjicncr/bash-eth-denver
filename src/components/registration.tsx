@@ -3,28 +3,23 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { CustomButton } from "./custom-button";
-import { useAccount } from "wagmi";
-import {
-  safeConvertAddressSS58,
-  usePolkadotWeb3,
-} from "@/lib/polkadot/hooks/usePolkadotAccounts";
 import { PolkadotButtonModal } from "./polkadot-button-modal";
 import { TokenProofResponse, TokenproofButton } from "./tokenproof-button";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { updateUser } from "@/lib/api/update-user";
-import { error } from "console";
 import { isValidAddressPolkadotAddress } from "@/lib/polkadot/utils";
 import { DownloadSubwalletModal } from "./download-subwallet-modal";
-import appStore from "@/assets/icons/app-store.png";
-import googlePlay from "@/assets/icons/google-play.png";
 import { DownloadNovaModal } from "./download-nova-modal";
 import { motion } from "framer-motion";
+import { Button, Input, Divider } from "@nextui-org/react";
+import PolkadotLogo from "@/assets/logos/polkadot-token-logo.png";
 
 const fadeIn = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
+    transition: { duration: 0.2 }, // Customize as needed
   },
 };
 
@@ -32,7 +27,7 @@ const fadeInSlower = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { delay: 0.5 }, // Customize as needed
+    transition: { duration: 0.2, delay: 0.6 }, // Customize as needed
   },
 };
 
@@ -194,7 +189,7 @@ export const Registration = () => {
   };
 
   return (
-    <div className="md:py-10 max-w-2xl mx-auto w-full">
+    <div className="max-w-2xl mx-auto w-full">
       <motion.div variants={fadeIn} initial="hidden" animate="visible">
         <p className="text-4xl w-full text-white font-black">
           Ticket Registration
@@ -254,18 +249,17 @@ const EmailView = ({
   return (
     <div>
       <div className="flex flex-col lg:flex-row gap-2">
-        <p className="text-teal-400 font-nimbus-sans-extended text-base font-normal">
+        <p className="text-gray-400 font-nimbus-sans-extended text-base font-normal">
           Step 1 of 3:
         </p>
-        <p className="font-bold mb-2">register</p>
       </div>
-      <div className="relative">
-        <input
+      <div className="relative py-4">
+        <Input
           type="email"
           value={email}
           onChange={handleEmailChange}
-          placeholder="enter your email address"
-          className="focus:placeholder-opacity-25 px-4 py-8 text-white placeholder-white w-full bg-inherit font-nimbus-sans-extended text-base font-normal focus:outline-none"
+          variant="underlined"
+          label="Enter your email address"
         />
         <div className="px-4 h-4 absolute -bottom-4">
           {showError && (
@@ -274,16 +268,21 @@ const EmailView = ({
             </p>
           )}
         </div>
-        <div className="w-274 h-1 bg-gradient-to-r from-transparent via-white to-transparent" />
       </div>
-      <div className="pt-12 w-full flex justify-between">
+      <div className="pt-2 w-full flex justify-between">
         <div>
           {onBack && <CustomButton onClick={onBack}>back</CustomButton>}
         </div>
 
-        <CustomButton isLoading={isLoading} onClick={onSubmit}>
-          continue
-        </CustomButton>
+        <Button
+          radius="sm"
+          variant="flat"
+          className="opacity-100 hover:text-primary-300 hover:text-opacity-100"
+          isLoading={isLoading}
+          onClick={onSubmit}
+        >
+          Next
+        </Button>
       </div>
     </div>
   );
@@ -353,34 +352,47 @@ const TokenproofView = ({
   return (
     <div>
       <div className="flex flex-col lg:flex-row gap-2">
-        <p className="text-teal-400 font-nimbus-sans-extended text-base font-normal">
+        <p className="text-gray-400 font-nimbus-sans-extended text-base font-normal">
           Step 2 of 3:
         </p>
-        <p className="font-bold mb-2">
-          verify with tokenproof to claim ticket now
-        </p>
       </div>
-      <p className="text-yellow-500">{`Congrats you're on the waitlist!`}</p>
-      <p className="py-4 font-bold font-display text-lg">
-        Are you an ETH Denver attendee?
+      <div className="py-4 font-bold text-primary-500 font-display flex flex-wrap text-2xl flex">
+        <p>You&apos;re waitlisted!&nbsp;</p>
+        <p className="text-white">Want to skip the line?</p>
+      </div>
+      <p className="mt-4">
+        Connect your ETH Denver account to receive your{" "}
+        <span className="text-primary-500">VIP ticket.</span>
       </p>
-      <p>
-        Skip the line by connecting your Tokenproof account. We{`'`}ll airdrop
-        you your <span className="text-yellow-500">VIP ticket.</span>
-      </p>
-      <div className="py-12 flex flex-col items-center">
+      <div className="pt-6 pb-8 flex flex-wrap items-center justify-center gap-4">
         <TokenproofButton onAuthenticate={handleTokenProofOnAuthenticate} />
-        <button
+        <Button
+          radius="sm"
+          variant="flat"
+          className="opacity-100 hover:text-primary-300 hover:text-opacity-100 w-52"
           onClick={onContinueWithNoTokenProof}
-          className="mt-4 text-gray-400 text-sm underline"
+          startContent={
+            <Image
+              src={PolkadotLogo}
+              alt="token proof"
+              height={20}
+              width={20}
+            />
+          }
         >
-          Not an ETH Denver attendee? Click here to download our partner apps
-          for a Bash ticket
-        </button>
+          Claim with Polkadot
+        </Button>
       </div>
-      <div className="w-274 h-1 bg-gradient-to-r from-transparent via-white to-transparent" />
-      <div className="pt-12 w-full flex justify-between">
-        <CustomButton onClick={onBack}>back</CustomButton>
+      <Divider className="my-4" />
+      <div className="pt-2 w-full flex justify-between">
+        <Button
+          radius="sm"
+          variant="flat"
+          className="opacity-100 hover:text-primary-300 hover:text-opacity-100"
+          onClick={onBack}
+        >
+          Back
+        </Button>
       </div>
     </div>
   );
@@ -409,14 +421,14 @@ const DownloadView = ({
     <div>
       <div>
         <div className="flex flex-col lg:flex-row gap-2">
-          <p className="text-teal-400 font-nimbus-sans-extended text-base font-normal">
+          <p className="text-gray-400 font-nimbus-sans-extended text-base font-normal">
             Step 3 of 3:
           </p>
           <p className="font-bold mb-2">
             download a polkadot wallet for hidden rewards 👀
           </p>
         </div>
-        <p className="font-bold text-2xl text-[#f0e68c] pt-4">
+        <p className="font-bold text-2xl text-success-500 pt-4">
           Congrats! You’re in for March 02.
         </p>
         <div className="flex">
@@ -506,22 +518,28 @@ const NotEthDenverAttendeeView = ({
       <div>
         <div>
           <div className="flex flex-col lg:flex-row gap-2">
-            <p className="text-teal-400 font-nimbus-sans-extended text-base font-normal">
+            <p className="text-gray-400 font-nimbus-sans-extended text-base font-normal">
               Step 3 of 3:
             </p>
-            <p className="font-bold mb-2">
-              download a polkadot wallet and show at the door for entry
-            </p>
           </div>
-          <p className="text-gray-100 text-md font-normal">
-            Please note, only ETH Denver participants are eligble for the hidden
-            rewards and special perks inside the event.
-          </p>
-          <div className="my-4 w-274 h-1 bg-gradient-to-r from-transparent via-white to-transparent" />
+
+          <div className="py-4 font-bold text-white font-display text-2xl">
+            Enter your Polkadot address to skip the line.
+          </div>
+
+          <div className="w-full">
+            <Input
+              type="text"
+              value={address}
+              onChange={(e: any) => onChangeAddress(e.target.value)}
+              variant="underlined"
+              label="Polkadot Address"
+            />
+          </div>
+
           <div className="flex flex-col items-center py-4">
             <div className="flex flex-col lg:flex-row justify-center items-center gap-4">
               <DownloadNovaModal />
-              <p className="text-center">or</p>
               <DownloadSubwalletModal />
             </div>
           </div>
@@ -534,32 +552,35 @@ const NotEthDenverAttendeeView = ({
               <div>
                 <PolkadotButtonModal onConnectAccount={onConnectAccount} />
               </div>
-              <div className="w-full ">
-                <p className="text-teal-400 py-2 text-center font-nimbus-sans-extended text-base font-normal">
-                  or
-                </p>
-                <p className="text-white text-center mb-4 font-nimbus-sans-extended text-base font-normal">
-                  copy paste polkadot wallet address you created here
-                </p>
-                <div className="w-full">
-                  <input
-                    type="text"
-                    value={address}
-                    onChange={(e: any) => onChangeAddress(e.target.value)}
-                    className="focus:placeholder-opacity-25 boder-solid border-teal-400 border-2 px-4 py-4 text-white placeholder-white w-full bg-inherit font-nimbus-sans-extended  font-normal focus:outline-none text-sm"
-                  />
-                </div>
-              </div>
             </div>
           </div>
         </div>
-        <div className="w-274 h-1 bg-gradient-to-r from-transparent via-white to-transparent" />
 
-        <div className="pt-4 w-full flex justify-between">
-          <CustomButton onClick={onBack}>back</CustomButton>
-          <CustomButton isLoading={isSubmitLoading} onClick={onContinue}>
-            submit for hidden rewards
-          </CustomButton>
+        <p className="text-gray-400 text-sm font-normal py-4">
+          *Only ETH Denver participants are eligble for the hidden rewards and
+          special perks inside the event.
+        </p>
+
+        <Divider className="my-4" />
+
+        <div className="pt-2 w-full flex justify-between">
+          <Button
+            radius="sm"
+            variant="flat"
+            className="opacity-100 hover:text-primary-300 hover:text-opacity-100"
+            onClick={onBack}
+          >
+            Back
+          </Button>
+          <Button
+            radius="sm"
+            variant="flat"
+            className="opacity-100 hover:text-primary-300 hover:text-opacity-100"
+            isLoading={isSubmitLoading}
+            onClick={onContinue}
+          >
+            Submit
+          </Button>
         </div>
       </div>
     </div>

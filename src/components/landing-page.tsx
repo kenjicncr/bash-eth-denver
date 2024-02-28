@@ -13,7 +13,7 @@ export const LandingPage = () => {
         <LandingPageHero />
       </section>
 
-      <LandingPagePartners />
+      <LandingPagePartners DisplayTitle={true} />
 
       <section className="py-10 max-w-7xl mx-auto w-full" id="about">
         <LandingPageAbout />
