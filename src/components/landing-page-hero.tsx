@@ -95,7 +95,7 @@ export const LandingPageHero = () => {
           variants={closingPartyVariants}
           initial="hidden"
           animate="visible"
-          className="text-4xl md:text-6xl lg:text-8xl w-full text-white z-10 mt-6 px-4 md:px-10 font-black md:max-w-6xl mx-auto"
+          className="text-4xl 2xl:text-6xl w-full text-white z-10 mt-6 px-4 md:px-10 font-black md:max-w-6xl mx-auto"
         >
           <motion.p variants={childVariants}>The</motion.p>
           <motion.p variants={childVariants} className="text-primary-500">
