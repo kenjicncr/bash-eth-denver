@@ -116,15 +116,15 @@ export const LandingPageHero = () => {
             className="mx-auto"
             whileHover={{ scale: 1.1 }}
           >
-            <Link href="/register">
-              <Button
-                variant="solid"
-                className="text-white text-2xl px-10 py-2 rounded-md bg-primary-500"
-                size="lg"
-              >
-                REGISTER
-              </Button>
-            </Link>
+            <Button
+              variant="solid"
+              className="text-white text-2xl px-10 py-2 rounded-md bg-primary-500"
+              size="lg"
+              as={Link}
+              href="/register"
+            >
+              REGISTER
+            </Button>
           </motion.div>
         </div>
       </motion.div>
