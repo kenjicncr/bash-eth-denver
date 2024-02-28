@@ -19,6 +19,23 @@ import { DownloadSubwalletModal } from "./download-subwallet-modal";
 import appStore from "@/assets/icons/app-store.png";
 import googlePlay from "@/assets/icons/google-play.png";
 import { DownloadNovaModal } from "./download-nova-modal";
+import { motion } from "framer-motion";
+
+const fadeIn = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { duration: 0.5 }, // Customize as needed
+  },
+};
+
+const fadeInSlower = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { duration: 0.5, delay: 1 }, // Customize as needed
+  },
+};
 
 export const Registration = () => {
   type View =
@@ -178,20 +195,12 @@ export const Registration = () => {
   };
 
   return (
-    <div className="max-w-xl w-full">
-      <div className="flex justify-start items-end">
-        <Image
-          src="/bash.svg"
-          alt="Logo"
-          priority
-          width={100}
-          height={100}
-          style={{ height: `auto`, width: `100px` }}
-        />
-        <p className="text-teal-600 font-nimbus-sans text-15 font-bold leading-none ml-4">
-          ticket registration
+    <div className="md:py-10 max-w-2xl mx-auto w-full">
+      <motion.div variants={fadeIn} initial="hidden" animate="visible">
+        <p className="text-4xl w-full text-white font-black">
+          Ticket Registration
         </p>
-      </div>
+      </motion.div>
       <div className="pt-8">{renderRegistrationView()}</div>
     </div>
   );
