@@ -70,7 +70,7 @@ export const Registration = () => {
 
   const submitNovaWalletMutation = useMutation({
     mutationFn: (polkadotAddress: string) => {
-      return updateUser({ email: email, polkadotAddress });
+      return updateUser({ email: email!, polkadotAddress });
     },
     onSuccess: (data) => {
       console.log({ data });
@@ -116,7 +116,7 @@ export const Registration = () => {
 
   const submitTokenproofMutation = useMutation({
     mutationFn: (tokenproofAddress: string) => {
-      return updateUser({ email: email, tokenproofAddress });
+      return updateUser({ email: email!, tokenproofAddress });
     },
     onSuccess: (data) => {
       console.log({ data });
@@ -186,7 +186,11 @@ export const Registration = () => {
             email={email}
             onChangeEmail={(email) => setEmail(email)}
             isLoading={submitEmailMutation.isPending}
-            onContinue={(email) => handleSubmitEmail(email)}
+            onContinue={(email) => {
+              if (email) {
+                handleSubmitEmail(email);
+              }
+            }}
           />
         );
     }
@@ -218,10 +222,10 @@ export const Registration = () => {
 };
 
 type EmailViewProps = {
-  onContinue: (email: string) => void;
+  onContinue: (email: string | undefined) => void;
   onBack?: () => void;
   isLoading?: boolean;
-  email: string;
+  email: string | undefined;
   onChangeEmail: (email: string) => void;
 };
 
@@ -252,8 +256,10 @@ const EmailView = ({
 
   useEffect(() => {
     // Basic email format validation
-    const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    setIsValid(isValidEmail);
+    if (email) {
+      const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      setIsValid(isValidEmail);
+    }
   }, [email]);
 
   return (
