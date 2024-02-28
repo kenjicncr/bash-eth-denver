@@ -116,6 +116,7 @@ export const Registration = () => {
 
   const submitTokenproofMutation = useMutation({
     mutationFn: (tokenproofAddress: string) => {
+      console.log({ tokenproofAddress });
       return updateUser({ email: email!, tokenproofAddress });
     },
     onSuccess: (data) => {
@@ -133,6 +134,7 @@ export const Registration = () => {
   });
 
   const handleTokenProofSuccess = (account: string) => {
+    console.log("success token proof");
     submitTokenproofMutation.mutate(account);
   };
 
@@ -325,15 +327,43 @@ const TokenproofView = ({
   }, []);
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [acount, setAccount] = useState<string | undefined>(undefined);
-  const [nonce, setNonce] = useState("");
+  const [nonce, setNonce] = useLocalStorage("nonce", "");
+
+  const accountQuery = useQuery({
+    queryKey: ["account", nonce],
+    enabled: isAuthenticated && nonce !== "",
+    queryFn: async () => {
+      const data = await fetch("/api/check-authentication-status", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ nonce: nonce }),
+      });
+
+      const dataJson = await data.json();
+
+      if (dataJson.claimTicketResult) {
+        if (dataJson.claimTicketResult.claim_id) {
+          console.log({ dataJson });
+          onSuccess(dataJson.account);
+        }
+
+        if (dataJson.claimTicketResult.code) {
+          onError && onError(dataJson.claimTicketResult.message);
+        }
+      }
+
+      return dataJson;
+    },
+  });
 
   const handleTokenProofOnAuthenticate = (response: TokenProofResponse) => {
     response.status === "authenticated"
       ? setIsAuthenticated(true)
       : setIsAuthenticated(false);
 
-    onSuccess(response.account);
+    setNonce(response.nonce);
   };
 
   return (

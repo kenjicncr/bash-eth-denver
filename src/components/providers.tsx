@@ -24,9 +24,7 @@ export function Providers({
       <UniversalConnectProvider>
         <QueryClientProvider client={queryClient}>
           <NextUIProvider>
-            <body className="dark text-foreground bg-background">
-              {children}
-            </body>
+            <div>{children}</div>
           </NextUIProvider>
         </QueryClientProvider>
       </UniversalConnectProvider>

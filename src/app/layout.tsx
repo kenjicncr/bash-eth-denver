@@ -46,28 +46,30 @@ export default function RootLayout({
         <meta name="msapplication-TileColor" content="#da532c" />
         <meta name="theme-color" content="#ffffff" />
       </head>
-      <Providers initialState={initialState}>
-        <Header />
-        <Toaster
-          toastOptions={{
-            duration: 20000,
-            closeButton: true,
-            style: {
-              background: `#8994eb`,
-              border: `none`,
-            },
-            classNames: {
-              toast: "bg-primary-500",
-              title: "text-white",
-              description: "text-white",
-              actionButton: "bg-zinc-400",
-              cancelButton: "bg-orange-400",
-              closeButton: "bg-lime-400",
-            },
-          }}
-        />
-        {children}
-      </Providers>
+      <body className="dark text-foreground bg-background">
+        <Providers initialState={initialState}>
+          <Header />
+          <Toaster
+            toastOptions={{
+              duration: 20000,
+              closeButton: true,
+              style: {
+                background: `#8994eb`,
+                border: `none`,
+              },
+              classNames: {
+                toast: "bg-primary-500",
+                title: "text-white",
+                description: "text-white",
+                actionButton: "bg-zinc-400",
+                cancelButton: "bg-orange-400",
+                closeButton: "bg-lime-400",
+              },
+            }}
+          />
+          {children}
+        </Providers>
+      </body>
     </html>
   );
 }
