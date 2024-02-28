@@ -15,11 +15,13 @@ export default function Home() {
         id="tokenproof"
         src="https://cdn.tokenproof.xyz/js/tokenproof-oa-widget-v1.0.js"
       />
-      <div className="w-full h-screen flex flex-col justify-center items-center h-screen px-4">
-        <Spacer className="flex-grow"/>
-        <Registration />
-        <Spacer className="flex-grow"/>
-        <LandingPagePartners />
+      <div className="overflow-hidden relative w-full h-screen flex flex-col justify-center items-center h-screen px-4">
+        <div className="absolute bottom-0 opacity-30 z-0">
+          <LandingPagePartners />
+        </div>
+        <div className="relative z-1 w-full">
+          <Registration />
+        </div>
       </div>
     </>
   );

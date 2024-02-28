@@ -162,7 +162,7 @@ export const LandingPagePartners = (props: { DisplayTitle?: boolean }) => {
         whileInView="onscreen"
         viewport={{ once: true, amount: 0.8 }}
       >
-        <ScrollingBanner shouldPauseOnHover gap="40px">
+        <ScrollingBanner shouldPauseOnHover={false} gap="40px">
           {logos.map(({ key, logo }) => (
             <div
               key={key}

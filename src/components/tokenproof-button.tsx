@@ -54,10 +54,11 @@ export const TokenproofButton = ({ onAuthenticate }: TokenproofButtonProps) => {
   return (
     <Button
       radius="sm"
-      variant="flat"
+      variant="solid"
+      size="lg"
       isLoading={isLoading}
       aria-label="verify with tokenproof"
-      className="opacity-100 hover:text-primary-300 hover:text-opacity-100 w-52"
+      className="opacity-100 hover:text-primary-300 hover:text-opacity-100"
       onClick={() => mutation.mutate()}
       startContent={
         <Image src={logo} alt="token proof" height={20} width={20} />

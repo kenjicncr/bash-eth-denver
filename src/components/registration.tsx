@@ -8,6 +8,8 @@ import { TokenProofResponse, TokenproofButton } from "./tokenproof-button";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { updateUser } from "@/lib/api/update-user";
+import SubwalletLogo from "@/assets/logos/subwallet-icon.png";
+
 import { isValidAddressPolkadotAddress } from "@/lib/polkadot/utils";
 import { DownloadSubwalletModal } from "./download-subwallet-modal";
 import { DownloadNovaModal } from "./download-nova-modal";
@@ -40,7 +42,7 @@ export const Registration = () => {
     | "success"
     | "notethdenver";
 
-  const [currentView, setCurrentView] = useState<View>("email");
+  const [currentView, setCurrentView] = useState<View>("download");
 
   const [email, setEmail] = useState("");
   const [polkadotAddress, setPolkadotAddress] = useState("");
@@ -192,7 +194,13 @@ export const Registration = () => {
     <div className="max-w-2xl mx-auto w-full">
       <motion.div variants={fadeIn} initial="hidden" animate="visible">
         <p className="text-4xl w-full text-white font-black">
-          Ticket Registration
+          {currentView === "download" ? (
+            <span className="text-yellow-500">
+              Congrats! You’re in for March 02.
+            </span>
+          ) : (
+            "Ticket Registration"
+          )}
         </p>
       </motion.div>
       <motion.div
@@ -362,26 +370,33 @@ const TokenproofView = ({
       </div>
       <p className="mt-4">
         Connect your ETH Denver account to receive your{" "}
-        <span className="text-primary-500">VIP ticket.</span>
+        <span className="text-primary-500 font-bold text-yellow-500">
+          VIP ticket.
+        </span>
       </p>
-      <div className="pt-6 pb-8 flex flex-wrap items-center justify-center gap-4">
+      <div className="pt-6 pb-8 flex flex-wrap items-center justify-center gap-4 flex-col">
         <TokenproofButton onAuthenticate={handleTokenProofOnAuthenticate} />
-        <Button
-          radius="sm"
-          variant="flat"
-          className="opacity-100 hover:text-primary-300 hover:text-opacity-100 w-52"
-          onClick={onContinueWithNoTokenProof}
-          startContent={
-            <Image
-              src={PolkadotLogo}
-              alt="token proof"
-              height={20}
-              width={20}
-            />
-          }
-        >
-          Claim with Polkadot
-        </Button>
+        <div className="flex flex-col justify-center items-center pt-8">
+          <p className="text-small mb-2">
+            Not an ETH Denver attendee? Grab a polkadot wallet
+          </p>
+          <Button
+            radius="sm"
+            variant="flat"
+            className="opacity-100 hover:text-primary-300 hover:text-opacity-100 w-52"
+            onClick={onContinueWithNoTokenProof}
+            startContent={
+              <Image
+                src={PolkadotLogo}
+                alt="token proof"
+                height={20}
+                width={20}
+              />
+            }
+          >
+            Get a Polkadot wallet
+          </Button>
+        </div>
       </div>
       <Divider className="my-4" />
       <div className="pt-2 w-full flex justify-between">
@@ -424,38 +439,39 @@ const DownloadView = ({
           <p className="text-gray-400 font-nimbus-sans-extended text-base font-normal">
             Step 3 of 3:
           </p>
-          <p className="font-bold mb-2">
-            download a polkadot wallet for hidden rewards 👀
-          </p>
-        </div>
-        <p className="font-bold text-2xl text-success-500 pt-4">
-          Congrats! You’re in for March 02.
-        </p>
-        <div className="flex">
           <p className="mb-2">
             Check your Tokenproof app for the{" "}
             <span className="font-bold">{`{bash}`}</span> ticket and event
             details.
-          </p>
+          </p>{" "}
         </div>
         <div className="my-4 w-274 h-1 bg-gradient-to-r from-transparent via-white to-transparent" />
         <div className="flex flex-col">
           <p className="text-teal-300 text-xl text-center">
-            You’re eligible for hidden rewards!{" "}
+            Download a Polkadot Wallet for hidden rewards 👀
           </p>
           <p className="text-gray-100 text-md text-center font-normal">
-            Our sponsor polkadot will be dropping cool things during and after
-            the event.{" "}
-          </p>
-          <p className="font-bold mt-1 text-center ">
-            We guarantee you do not want to miss this.
+            You don{`'`}t want to miss this
           </p>
         </div>
         <div className="flex flex-col items-center py-4">
           <div className="flex flex-col lg:flex-row justify-center items-center gap-4">
             <DownloadNovaModal />
             <p className="text-center">or</p>
-            <DownloadSubwalletModal />
+            <Button
+              radius="sm"
+              variant="flat"
+              className="opacity-100 hover:text-primary-300 hover:text-opacity-100 w-52"
+              as="a"
+              target="_blank"
+              rel="noreferrer noopener nofollow"
+              href="https://www.subwallet.app/download.html?lang=1"
+              startContent={
+                <Image src={SubwalletLogo} alt="token proof" height={20} />
+              }
+            >
+              Download Subwallet
+            </Button>
           </div>
         </div>
         <div className="w-274 h-1 bg-gradient-to-r from-transparent via-white to-transparent" />
@@ -466,32 +482,33 @@ const DownloadView = ({
               {`Already installed a polkadot wallet?`}
             </p>
             <div>
-              <PolkadotButtonModal onConnectAccount={onConnectAccount} />
-            </div>
-            <div className="w-full ">
-              <p className="text-teal-400 py-2 text-center font-nimbus-sans-extended text-base font-normal">
-                or
-              </p>
-              <p className="text-white text-center mb-4 font-nimbus-sans-extended text-base font-normal">
-                copy paste polkadot wallet address you created here
-              </p>
-              <div className="w-full">
-                <input
-                  type="text"
-                  value={address}
-                  onChange={(e: any) => onChangeAddress(e.target.value)}
-                  className="focus:placeholder-opacity-25 boder-solid border-teal-400 border-2 px-4 py-4 text-white placeholder-white w-full bg-inherit font-nimbus-sans-extended  font-normal focus:outline-none text-sm"
-                />
-              </div>
+              <PolkadotButtonModal
+                address={address}
+                onChangeAddress={onChangeAddress}
+                onConnectAccount={onConnectAccount}
+              />
             </div>
           </div>
         </div>
       </div>
       <div className="pt-4 w-full flex justify-between">
-        <CustomButton onClick={onBack}>back</CustomButton>
-        <CustomButton isLoading={isSubmitLoading} onClick={onContinue}>
+        <Button
+          radius="sm"
+          variant="flat"
+          className="opacity-100 hover:text-primary-300 hover:text-opacity-100"
+          onClick={onBack}
+        >
+          back
+        </Button>
+        <Button
+          radius="sm"
+          variant="flat"
+          className="opacity-100 hover:text-primary-300 hover:text-opacity-100"
+          isLoading={isSubmitLoading}
+          onClick={onContinue}
+        >
           submit for hidden rewards
-        </CustomButton>
+        </Button>
       </div>
     </div>
   );
@@ -540,7 +557,20 @@ const NotEthDenverAttendeeView = ({
           <div className="flex flex-col items-center py-4">
             <div className="flex flex-col lg:flex-row justify-center items-center gap-4">
               <DownloadNovaModal />
-              <DownloadSubwalletModal />
+              <Button
+                radius="sm"
+                variant="flat"
+                className="opacity-100 hover:text-primary-300 hover:text-opacity-100 w-52"
+                as="a"
+                target="_blank"
+                rel="noreferrer noopener nofollow"
+                href="https://www.subwallet.app/download.html?lang=1"
+                startContent={
+                  <Image src={SubwalletLogo} alt="token proof" height={20} />
+                }
+              >
+                Download Subwallet
+              </Button>
             </div>
           </div>
           <div className="flex flex-col items-center w-full">
@@ -550,15 +580,22 @@ const NotEthDenverAttendeeView = ({
                 {`Already installed a polkadot wallet?`}
               </p>
               <div>
-                <PolkadotButtonModal onConnectAccount={onConnectAccount} />
+                <PolkadotButtonModal
+                  address={address}
+                  onChangeAddress={onChangeAddress}
+                  onConnectAccount={onConnectAccount}
+                />
               </div>
             </div>
           </div>
         </div>
 
-        <p className="text-gray-400 text-sm font-normal py-4">
-          *Only ETH Denver participants are eligble for the hidden rewards and
-          special perks inside the event.
+        <p className="text-gray-100 text-sm font-normal py-4">
+          *Only{" "}
+          <span className="bold">
+            ETH Denver participants WITH a valid Polkadot address{" "}
+          </span>
+          are eligble for the hidden rewards and special perks inside the event.
         </p>
 
         <Divider className="my-4" />
