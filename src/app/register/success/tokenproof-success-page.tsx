@@ -221,7 +221,7 @@ export const TokenproofSuccessPage = () => {
 
   return (
     <div className="max-w-2xl mx-auto w-full">
-      {nonceAccountQuery.isFetched ? (
+      {!nonceAccountQuery.isLoading ? (
         <div className="overflow-hidden relative w-full h-screen flex flex-col justify-center items-center h-screen px-4">
           <div className="absolute bottom-0 opacity-30 z-0">
             <LandingPagePartners />
@@ -234,7 +234,7 @@ export const TokenproofSuccessPage = () => {
                 </span>
               ) : (
                 <span className="text-red-500 text-3xl">
-                  Looks like you don't have an ETH Denver Wallet
+                  Looks like you {`don't`} have an ETH Denver Wallet
                 </span>
               )}
             </p>
