@@ -9,7 +9,7 @@ import { LandingPagePartners } from "./landing-page-partners";
 export const LandingPage = () => {
   return (
     <div>
-      <section className="h-screen w-full flex-col flex justify-center items-center">
+      <section className="h-screen mx-auto w-full flex-col flex justify-center items-center">
         <LandingPageHero />
       </section>
 

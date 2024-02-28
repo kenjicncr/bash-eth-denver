@@ -70,13 +70,13 @@ export const LandingPageHero = () => {
               linear-gradient(to left, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
           background-repeat: no-repeat;
           /* Adjust these percentages to control the fade size */
-          background-size: 100% 20%, 100% 20%, 20% 100%, 20% 100%;
+          background-size: 100% 20%, 100% 30%, 20% 100%, 20% 100%;
           background-position: top, bottom, left, right;
           pointer-events: none; /* Ensures clicks pass through to the video */
         }
       `}</style>
       <motion.div
-        className="relative w-full lg:min-h-screen flex-1 flex-col flex justify-center items-center"
+        className="relative w-full md:min-h-screen flex-1 flex-col flex justify-center items-center"
         initial="hidden"
         animate="visible"
       >
@@ -89,13 +89,13 @@ export const LandingPageHero = () => {
           <video autoPlay loop muted className="w-full h-screen object-cover">
             <source src="/videos/Rave-Bash-Edit.mp4" type="video/mp4" />
           </video>
-          <div className="top-0 left-0 right-0 bottom-0 z-10 custom-gradient"></div>
+          <div className="z-10 custom-gradient"></div>
         </motion.div>
         <motion.div
           variants={closingPartyVariants}
           initial="hidden"
           animate="visible"
-          className="text-4xl w-full md:text-8xl text-white z-10 mt-6 px-4 md:px-10 font-black"
+          className="text-4xl w-full md:text-8xl text-white z-10 mt-6 px-4 md:px-10 font-black max-w-7xl mx-auto"
         >
           <motion.p variants={childVariants}>The</motion.p>
           <motion.p variants={childVariants} className="text-primary-500">
@@ -106,11 +106,11 @@ export const LandingPageHero = () => {
         </motion.div>
         <motion.div
           variants={logoVariants}
-          className="w-full my-2 z-10 px-4 md:px-10 md:my-11"
+          className="w-full my-2 z-10 px-4 md:px-10 md:mt-11 max-w-7xl mx-auto"
         >
           <Image priority className="w-full" src={logo} alt="bash logo" />
         </motion.div>
-        <div className="flex flex-col justify-center mt-10 md:mt-20 items-center">
+        <div className="flex flex-col justify-center mt-10 xl:mt-20 items-center">
           <motion.div
             variants={registerButtonVariants}
             className="mx-auto"
