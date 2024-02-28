@@ -48,7 +48,24 @@ export default function RootLayout({
       </head>
       <Providers initialState={initialState}>
         <Header />
-        <Toaster />
+        <Toaster
+          toastOptions={{
+            duration: 20000,
+            closeButton: true,
+            style: {
+              background: `#8994eb`,
+              border: `none`,
+            },
+            classNames: {
+              toast: "bg-primary-500",
+              title: "text-white",
+              description: "text-white",
+              actionButton: "bg-zinc-400",
+              cancelButton: "bg-orange-400",
+              closeButton: "bg-lime-400",
+            },
+          }}
+        />
         {children}
       </Providers>
     </html>

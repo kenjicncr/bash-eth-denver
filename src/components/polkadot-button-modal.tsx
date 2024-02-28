@@ -19,6 +19,7 @@ import { LoadingSpinner } from "./loading-spinner";
 import novaWalletLogo from "@/assets/icons/NovaWallet.svg";
 import subWalletLogo from "@/assets/icons/subwallet-logo.svg";
 import Image from "next/image";
+import { Button } from "@nextui-org/react";
 
 export const projectId = process.env.NEXT_PUBLIC_PROJECT_ID;
 
@@ -36,8 +37,12 @@ const params = {
 
 interface PolkadotButtonProps {
   onConnectAccount: (address: string) => void;
+  onChangeAddress: (address: string) => void;
+  address: string;
 }
 export const PolkadotButtonModal = ({
+  onChangeAddress,
+  address,
   onConnectAccount,
 }: PolkadotButtonProps) => {
   // const { provider } = useUniversalConnect();
@@ -163,20 +168,28 @@ export const PolkadotButtonModal = ({
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <button
+        <Button
+          variant="flat"
+          size="lg"
           onClick={() => setIsOpen(true)}
-          className="flex justify-center items-center h-8 px-4 py-6 flex-shrink-0 rounded-md border-2 border-white bg-white text-black"
+          className="opacity-100 hover:text-primary-300 hover:text-opacity-100 w-52"
         >
-          Select Wallet
-        </button>
+          {address
+            ? address.substring(0, 4) +
+              "..." +
+              address.substring(address.length - 3)
+            : `Connect Wallet`}
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] bg-black border-teal-400">
         <DialogHeader>
-          <DialogTitle>Select Wallet</DialogTitle>
+          <DialogTitle>Connect Wallet</DialogTitle>
         </DialogHeader>
         <div className="flex flex-col gap-4">
-          <button
+          <Button
             onClick={openWalletConnectModal}
+            variant="flat"
+            size="lg"
             aria-label="Connect with Nova Wallet"
             className="flex justify-center items-center px-4 py-4 bg-white text-black  rounded-md"
           >
@@ -191,8 +204,10 @@ export const PolkadotButtonModal = ({
               />
             )}
             <span className="ml-2 tracking-wide">Connect Nova Wallet</span>
-          </button>
-          <button
+          </Button>
+          <Button
+            variant="flat"
+            size="lg"
             onClick={() => {
               if (isExtensionInstalled("subwallet-js")) {
                 openSubWallet();
@@ -214,7 +229,18 @@ export const PolkadotButtonModal = ({
               />
             )}
             <span className="ml-2 tracking-wide">Connect Subwallet</span>
-          </button>
+          </Button>
+          <p className="text-center">or</p>
+          <div className="w-full flex justify-center">
+            <input
+              type="text"
+              value={address}
+              placeholder="copy paste polkadot wallet address you created here
+"
+              onChange={(e: any) => onChangeAddress(e.target.value)}
+              className="placeholder-opacity-60 focus:placeholder-opacity-25 boder-solid border-gray-400 border-2 px-4 py-4 text-white placeholder-white w-full bg-inherit font-nimbus-sans-extended  font-normal focus:outline-none text-sm max-w-md mx-auto"
+            />
+          </div>
         </div>
       </DialogContent>
     </Dialog>

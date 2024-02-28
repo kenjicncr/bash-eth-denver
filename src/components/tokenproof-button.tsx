@@ -6,6 +6,7 @@ import Image from "next/image";
 
 import logo from "@/assets/logos/tokenproof-logo.png";
 import { LoadingSpinner } from "./loading-spinner";
+import { Button } from "@nextui-org/react";
 
 export interface TokenProofResponse {
   nonce: string;
@@ -51,20 +52,19 @@ export const TokenproofButton = ({ onAuthenticate }: TokenproofButtonProps) => {
   });
 
   return (
-    <div className="flex justify-center">
-      <button
-        onClick={() => mutation.mutate()}
-        aria-label="verify with tokenproof"
-        className="flex justify-center items-center px-4 py-4 bg-white text-black  rounded-md"
-      >
-        {isLoading ? (
-          <LoadingSpinner size={20} color="black" />
-        ) : (
-          <Image src={logo} alt="token proof" height={20} width={20} />
-        )}
-
-        <span className="ml-2 tracking-wide">Claim ticket with tokenproof</span>
-      </button>
-    </div>
+    <Button
+      radius="sm"
+      variant="solid"
+      size="lg"
+      isLoading={isLoading}
+      aria-label="verify with tokenproof"
+      className="opacity-100 hover:text-primary-300 hover:text-opacity-100"
+      onClick={() => mutation.mutate()}
+      startContent={
+        <Image src={logo} alt="token proof" height={20} width={20} />
+      }
+    >
+      Claim with Tokenproof
+    </Button>
   );
 };

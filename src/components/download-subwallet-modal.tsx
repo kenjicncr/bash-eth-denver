@@ -8,16 +8,13 @@ import {
   DialogTrigger,
   DialogClose,
 } from "@/components/ui/dialog";
-import { FaApple, FaChrome } from "react-icons/fa";
-import { IoLogoGooglePlaystore } from "react-icons/io5";
-
 import Image from "next/image";
-
 import novaAppleQr from "@/assets/icons/nova-qr-apple.png";
 import novaAndroidQr from "@/assets/icons/nova-qr-android.png";
-
 import appStore from "@/assets/icons/app-store.png";
 import googlePlay from "@/assets/icons/google-play.png";
+import { Button } from "@nextui-org/react";
+import SubwalletLogo from "@/assets/logos/subwallet-icon.png";
 
 interface DownloadSubwalletModalProps {
   onClickContinue?: () => void;
@@ -28,19 +25,16 @@ export const DownloadSubwalletModal = ({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <a
-          href="https://www.subwallet.app/download.html?lang=1"
-          target="_blank"
-          rel="noreferrer nofollow noopener"
-          className="flex justify-center items-center h-8 px-4 py-6 flex-shrink-0 rounded-md border-2 border-pink-600 bg-pink-600"
+        <Button
+          radius="sm"
+          variant="flat"
+          className="opacity-100 hover:text-primary-300 hover:text-opacity-100 w-52"
+          startContent={
+            <Image src={SubwalletLogo} alt="token proof" height={20}/>
+          }
         >
-          <div className="grid grid-cols-3 gap-2 mr-2">
-            <FaChrome />
-            <FaApple />
-            <IoLogoGooglePlaystore />
-          </div>
           Download Subwallet
-        </a>
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] bg-black border-teal-400">
         <DialogHeader>
