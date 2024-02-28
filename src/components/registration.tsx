@@ -42,7 +42,7 @@ export const Registration = () => {
     | "success"
     | "notethdenver";
 
-  const [currentView, setCurrentView] = useState<View>("download");
+  const [currentView, setCurrentView] = useState<View>("email");
 
   const [email, setEmail] = useState("");
   const [polkadotAddress, setPolkadotAddress] = useState("");
