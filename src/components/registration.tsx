@@ -276,8 +276,8 @@ const EmailView = ({
           type="email"
           value={email}
           onChange={handleEmailChange}
-          variant="underlined"
-          label="Enter your email address"
+          variant="bordered"
+          placeholder="Email address"
         />
         <div className="px-4 h-4 absolute -bottom-4">
           {showError && (
