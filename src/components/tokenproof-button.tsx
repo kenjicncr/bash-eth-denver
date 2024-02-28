@@ -7,6 +7,7 @@ import Image from "next/image";
 import logo from "@/assets/logos/tokenproof-logo.png";
 import { LoadingSpinner } from "./loading-spinner";
 import { Button } from "@nextui-org/react";
+import { useLocalStorage } from "react-use";
 
 export interface TokenProofResponse {
   nonce: string;
@@ -23,8 +24,9 @@ interface TokenproofButtonProps {
 }
 export const TokenproofButton = ({ onAuthenticate }: TokenproofButtonProps) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [nonce, setNonce] = useLocalStorage("nonce", "");
   const mutation = useMutation({
-    mutationFn: (): Promise<TokenProofResponse> => {
+    mutationFn: async (): Promise<TokenProofResponse> => {
       if (typeof window !== "undefined") {
         setIsLoading(true);
         //@ts-ignore
@@ -34,7 +36,9 @@ export const TokenproofButton = ({ onAuthenticate }: TokenproofButtonProps) => {
           process.env.NODE_ENV === "development"
             ? "20b9a646-1aa9-4d33-b776-bcb126969d9c"
             : "afb7c5d9-136f-489a-8fe1-8f53f130064a";
-        return tokenproof.login({ appId }) as Promise<TokenProofResponse>;
+        return (await tokenproof.login({
+          appId,
+        })) as Promise<TokenProofResponse>;
       } else {
         throw new Error("Window is undefined");
       }
@@ -51,6 +55,19 @@ export const TokenproofButton = ({ onAuthenticate }: TokenproofButtonProps) => {
     },
   });
 
+  useEffect(() => {
+    let tokenproofAuthenticate: any;
+    let tokenproof: any;
+    if (typeof window !== undefined) {
+      //@ts-ignore
+      tokenproof = window.tokenproof;
+      tokenproofAuthenticate = tokenproof.on("nonce", (e: any) => {
+        console.log("new nonce generated: ", e);
+        setNonce(e.current);
+      });
+    }
+  }, []);
+
   return (
     <Button
       radius="sm"
@@ -59,7 +76,10 @@ export const TokenproofButton = ({ onAuthenticate }: TokenproofButtonProps) => {
       isLoading={isLoading}
       aria-label="verify with tokenproof"
       className="opacity-100 hover:text-primary-300 hover:text-opacity-100"
-      onClick={() => mutation.mutate()}
+      onClick={async () => {
+        const data = await mutation.mutate();
+        console.log({ data });
+      }}
       startContent={
         <Image src={logo} alt="token proof" height={20} width={20} />
       }
