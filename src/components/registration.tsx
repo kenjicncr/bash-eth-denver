@@ -25,7 +25,6 @@ const fadeIn = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { duration: 0.5 }, // Customize as needed
   },
 };
 
@@ -33,7 +32,7 @@ const fadeInSlower = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { duration: 0.5, delay: 1 }, // Customize as needed
+    transition: { delay: 0.5 }, // Customize as needed
   },
 };
 
@@ -201,7 +200,14 @@ export const Registration = () => {
           Ticket Registration
         </p>
       </motion.div>
-      <div className="pt-8">{renderRegistrationView()}</div>
+      <motion.div
+        variants={fadeInSlower}
+        initial="hidden"
+        animate="visible"
+        className="pt-8"
+      >
+        {renderRegistrationView()}
+      </motion.div>
     </div>
   );
 };

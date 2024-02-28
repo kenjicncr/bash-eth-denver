@@ -2,16 +2,7 @@
 
 import ScrollingBanner from "./scrolling-banner";
 import { Variants, motion } from "framer-motion";
-import { MoonbeansLogo } from "../assets/logos/Moonbeans-Logo";
-
-import polkadotLogo from "@/assets/logos/Polkadot_Logo_Horizontal_Pink_White.svg";
 import Image from "next/image";
-import { PolkadotLogo } from "@/assets/logos/Polkadot-Logo";
-import { MoonbeamLogo } from "@/assets/logos/Moonbeam-Logo";
-
-import exiledRacers from "@/assets/logos/exiled-racers.png";
-import novaWallet from "@/assets/logos/nova-wallet.png";
-
 import exiledRacersWhite from "@/assets/brands/exiled-racers-white.png";
 import moonbeamWhite from "@/assets/brands/moonbeam-white.png";
 import polkadotWhite from "@/assets/brands/polkadot-white.png";
@@ -94,39 +85,19 @@ export const Logo1 = (
 
 const logos = [
   {
+    key: "bifrost",
+    logo: (
+      <div className="w-[250px]">
+        <Image src={bifrostWhite} alt="bifrost logo" />
+      </div>
+    ),
+    link: "",
+  },
+  {
     key: "distractive",
     logo: (
       <div className="w-[167px]">
         <Image src={distractiveWhite} alt="distractive logo" />
-      </div>
-    ),
-    link: "",
-  },
-  {
-    key: "moonbeam",
-    logo: (
-      <div className="w-[167px]">
-        <Image
-          src={moonbeamWhite}
-          height={50}
-          width={167}
-          alt="moonbeam logo"
-        />
-      </div>
-    ),
-    link: "",
-  },
-
-  {
-    key: "exiled-racers",
-    logo: (
-      <div className="w-[258px]">
-        <Image
-          src={exiledRacersWhite}
-          height={25}
-          width={258}
-          alt="exiled racers logo"
-        />
       </div>
     ),
     link: "",
@@ -150,6 +121,35 @@ const logos = [
     link: "",
   },
   {
+    key: "moonbeam",
+    logo: (
+      <div className="w-[167px]">
+        <Image
+          src={moonbeamWhite}
+          height={50}
+          width={167}
+          alt="moonbeam logo"
+        />
+      </div>
+    ),
+    link: "",
+  },
+
+  {
+    key: "exiled-racers",
+    logo: (
+      <div className="w-[200px]">
+        <Image
+          src={exiledRacersWhite}
+          height={25}
+          width={258}
+          alt="exiled racers logo"
+        />
+      </div>
+    ),
+    link: "",
+  },
+  {
     key: "subwallet",
     logo: (
       <div>
@@ -163,27 +163,11 @@ const logos = [
     ),
     link: "",
   },
-  /** 
-  {
-    key: "distractive",
-    logo: PolkadotLogo,
-    link: "",
-  },
-  */
   {
     key: "hydradx",
     logo: (
       <div className="w-[250px]">
         <Image src={hydradxWhite} alt="hydradx logo" />
-      </div>
-    ),
-    link: "",
-  },
-  {
-    key: "bifrost",
-    logo: (
-      <div className="w-[250px]">
-        <Image src={bifrostWhite} alt="bifrost logo" />
       </div>
     ),
     link: "",
