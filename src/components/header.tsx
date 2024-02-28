@@ -32,7 +32,7 @@ export const Header = (props: NavbarProps) => {
       height="54px"
     >
       <NavbarContent
-        className="relative gap-8 rounded-md border-small border-default-200/20 bg-background/60 px-2 shadow-medium backdrop-blur-md backdrop-saturate-150 dark:bg-default-100/50"
+        className="gap-8 rounded-md border-small border-default-200/20 bg-background/60 px-2 shadow-medium backdrop-blur-md backdrop-saturate-150 dark:bg-default-100/50"
         justify="center"
       >
         {/* Toggle */}
@@ -92,10 +92,12 @@ export const Header = (props: NavbarProps) => {
             </Button>
           </Link>
         </NavbarItem>
+      </NavbarContent>
+
 
         {/* Menu */}
         <NavbarMenu
-          className="absolute top-[calc(var(--navbar-height)/2)] mx-auto max-w-[90vw] mt-16 max-h-[fit-content] rounded-md border-small border-default-200/20 bg-background/60 py-4 shadow-medium backdrop-blur-md backdrop-saturate-150 dark:bg-default-100/50"
+          className="top-[calc(var(--navbar-height)/2)] mx-auto max-w-[90vw] mt-16 max-h-[fit-content] rounded-md border-small border-default-200/20 bg-background/60 py-4 shadow-medium backdrop-blur-md backdrop-saturate-150 dark:bg-default-100/50"
           motionProps={{
             initial: { opacity: 0, y: -20 },
             animate: { opacity: 1, y: 0 },
@@ -133,7 +135,6 @@ export const Header = (props: NavbarProps) => {
             </Link>
           </NavbarMenuItem>
         </NavbarMenu>
-      </NavbarContent>
     </Navbar>
   );
 };

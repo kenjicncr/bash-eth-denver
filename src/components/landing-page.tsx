@@ -15,12 +15,14 @@ export const LandingPage = () => {
 
       <LandingPagePartners />
 
-      <section className="py-24 px-4" id="about">
+      <section className="py-10 max-w-7xl mx-auto w-full" id="about">
         <LandingPageAbout />
       </section>
+
       <section className="py-24 px-4" id="events">
         <LandingPageUpcomingEvents />
       </section>
+
       <section className="py-10 max-w-7xl mx-auto w-full" id="releases">
         <LandingPageArtistsSection />
       </section>

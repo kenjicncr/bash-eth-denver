@@ -162,7 +162,7 @@ const fadeIn: Variants = {
 
 export const LandingPagePartners = () => {
   return (
-    <section className="mx-auto w-full max-w-7xl px-6 mt-20 z-100">
+    <section className="mx-auto w-full max-w-7xl px-6 mt-20">
       <motion.div
         variants={scrollInLeft}
         initial="offscreen"
@@ -170,7 +170,7 @@ export const LandingPagePartners = () => {
         viewport={{ once: true, amount: 0.8 }}
         className="text-4xl w-full md:text-8xl text-white font-black  py-10"
       >
-        Presented by:
+        Presented by
       </motion.div>
       <motion.div
         variants={fadeIn}
@@ -182,7 +182,7 @@ export const LandingPagePartners = () => {
           {logos.map(({ key, logo }) => (
             <div
               key={key}
-              className="flex mt-10 items-center justify-center text-foreground"
+              className="flex m md:my-10 items-center justify-center text-foreground"
             >
               {logo}
             </div>
