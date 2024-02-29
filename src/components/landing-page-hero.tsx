@@ -86,7 +86,13 @@ export const LandingPageHero = () => {
           animate="visible"
           className="absolute w-full h-screen z--1"
         >
-          <video autoPlay loop muted className="w-full h-screen object-cover">
+          <video
+            playsInline
+            autoPlay
+            loop
+            muted
+            className="w-full h-screen object-cover"
+          >
             <source src="/videos/Rave-Bash-Edit.mp4" type="video/mp4" />
           </video>
           <div className="z-10 custom-gradient"></div>
