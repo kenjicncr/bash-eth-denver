@@ -61,7 +61,7 @@ export const DownloadNovaModal = ({
                 <a
                   target="_blank"
                   rel="noopener noreferrer nofollow"
-                  href="https://play.google.com/store/apps/details?id=io.novafoundation.nova.market?utm_source=bash.audio&utm_medium=referral&utm_campaign=app_download&utm_content=app_store_link"
+                  href="https://play.google.com/store/apps/details?id=io.novafoundation.nova.market"
                 >
                   <Image src={googlePlay} alt="nova google play download" />
                 </a>
