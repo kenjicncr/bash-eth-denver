@@ -83,7 +83,20 @@ const DownloadView = ({
         </div>
         <div className="flex flex-col items-center py-4">
           <div className="flex flex-col lg:flex-row justify-center items-center gap-4">
-            <DownloadNovaModal />
+            <DownloadNovaModal
+              onClick={async () => {
+                fetch(`/api/track-download-clicks`, {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    email: email,
+                    action: "download-nova",
+                  }),
+                });
+              }}
+            />
             <p className="text-center">or</p>
             <Button
               radius="sm"
@@ -91,6 +104,18 @@ const DownloadView = ({
               className="opacity-100 hover:text-primary-300 hover:text-opacity-100 w-52"
               as="a"
               target="_blank"
+              onClick={async () => {
+                fetch(`/api/track-download-clicks`, {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    email: email,
+                    action: "download-subwallet",
+                  }),
+                });
+              }}
               rel="noreferrer noopener nofollow"
               href="https://www.subwallet.app/download.html?lang=1"
               startContent={

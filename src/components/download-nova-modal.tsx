@@ -20,9 +20,11 @@ import NovaLogo from "@/assets/logos/nova-logo.png";
 
 interface DownloadNovaModalProps {
   onClickContinue?: () => void;
+  onClick: () => void;
 }
 export const DownloadNovaModal = ({
   onClickContinue,
+  onClick,
 }: DownloadNovaModalProps) => {
   return (
     <Dialog>
@@ -34,6 +36,7 @@ export const DownloadNovaModal = ({
           startContent={
             <Image src={NovaLogo} alt="token proof" height={20} width={20} />
           }
+          onClick={onClick}
         >
           Download Nova
         </Button>

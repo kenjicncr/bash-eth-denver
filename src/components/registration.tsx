@@ -443,6 +443,8 @@ const DownloadView = ({
   address,
   isSubmitLoading,
 }: DownloadViewProps) => {
+  const [email] = useLocalStorage("email");
+
   return (
     <div>
       <div>
@@ -467,7 +469,20 @@ const DownloadView = ({
         </div>
         <div className="flex flex-col items-center py-4">
           <div className="flex flex-col lg:flex-row justify-center items-center gap-4">
-            <DownloadNovaModal />
+            <DownloadNovaModal
+              onClick={async () => {
+                fetch(`/api/track-download-clicks`, {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    email: email,
+                    action: "download-nova",
+                  }),
+                });
+              }}
+            />
             <p className="text-center">or</p>
             <Button
               radius="sm"
@@ -477,6 +492,18 @@ const DownloadView = ({
               target="_blank"
               rel="noreferrer noopener nofollow"
               href="https://www.subwallet.app/download.html?lang=1"
+              onClick={async () => {
+                fetch(`/api/track-download-clicks`, {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    email: email,
+                    action: "download-subwallet",
+                  }),
+                });
+              }}
               startContent={
                 <Image src={SubwalletLogo} alt="token proof" height={20} />
               }
@@ -541,6 +568,7 @@ const NotEthDenverAttendeeView = ({
   isSubmitLoading,
   onContinue,
 }: NotEthDenverAttendeeViewProps) => {
+  const [email] = useLocalStorage("email");
   return (
     <div>
       <div>
@@ -567,7 +595,20 @@ const NotEthDenverAttendeeView = ({
 
           <div className="flex flex-col items-center py-4">
             <div className="flex flex-col lg:flex-row justify-center items-center gap-4">
-              <DownloadNovaModal />
+              <DownloadNovaModal
+                onClick={async () => {
+                  fetch(`/api/track-download-clicks`, {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                      email: email,
+                      action: "download-nova",
+                    }),
+                  });
+                }}
+              />
               <Button
                 radius="sm"
                 variant="flat"
@@ -576,6 +617,18 @@ const NotEthDenverAttendeeView = ({
                 target="_blank"
                 rel="noreferrer noopener nofollow"
                 href="https://www.subwallet.app/download.html?lang=1"
+                onClick={async () => {
+                  fetch(`/api/track-download-clicks`, {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                      email: email,
+                      action: "download-subwallet",
+                    }),
+                  });
+                }}
                 startContent={
                   <Image src={SubwalletLogo} alt="token proof" height={20} />
                 }
