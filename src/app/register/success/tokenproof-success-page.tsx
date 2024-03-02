@@ -22,8 +22,11 @@ type DownloadViewProps = {
   onConnectAccount: (address: string) => void;
   onChangeAddress: (address: string) => void;
   address: string;
+  email: string | undefined;
   isSubmitLoading: boolean;
   isAuthenticated: boolean;
+  onChangeEmail: (email: string) => void;
+  nonLocalStorageEmail: string;
 };
 
 const DownloadView = ({
@@ -35,6 +38,9 @@ const DownloadView = ({
   address,
   isSubmitLoading,
   isAuthenticated,
+  email,
+  onChangeEmail,
+  nonLocalStorageEmail,
 }: DownloadViewProps) => {
   return (
     <div>
@@ -50,7 +56,9 @@ const DownloadView = ({
               details.
             </p>
           ) : (
-            <p>Get access with a polkadot wallet</p>
+            <div>
+              <p>Get access with a polkadot wallet</p>
+            </div>
           )}
         </div>
         <div className="my-4 w-274 h-1 bg-gradient-to-r from-transparent via-white to-transparent" />
@@ -110,8 +118,21 @@ const DownloadView = ({
           </div>
         </div>
       </div>
+      <div>
+        {!email && (
+          <Input
+            radius="sm"
+            size="lg"
+            className="w-full lg:w-auto opacity-100"
+            value={nonLocalStorageEmail}
+            onChange={(e) => onChangeEmail(e.target.value)}
+            placeholder="Please re-enter your email"
+          />
+        )}
+      </div>
       <div className="pt-4 w-full flex justify-between">
         <div />
+
         <Button
           radius="sm"
           variant="flat"
@@ -130,6 +151,8 @@ const DownloadView = ({
 export const TokenproofSuccessPage = () => {
   const [email, setEmail] = useLocalStorage("email", "");
   const [nonce, setNonce] = useLocalStorage("nonce", "");
+
+  const [nonLocalStorageEmail, setNonlocalStorageEmail] = useState("");
 
   console.log({ email, nonce });
 
@@ -175,7 +198,10 @@ export const TokenproofSuccessPage = () => {
 
   const submitNovaWalletMutation = useMutation({
     mutationFn: (polkadotAddress: string) => {
-      return updateUser({ email: email!, polkadotAddress });
+      return updateUser({
+        email: email || nonLocalStorageEmail,
+        polkadotAddress,
+      });
     },
     onSuccess: (data) => {
       console.log({ data });
@@ -238,12 +264,14 @@ export const TokenproofSuccessPage = () => {
                 </span>
               )}
             </p>
-            <p>Email: {email}</p>
             <DownloadView
+              email={email}
+              nonLocalStorageEmail={nonLocalStorageEmail}
               onBack={() => {}}
               isAuthenticated={isAuthenticated}
               onContinue={handleOnContinueConnect}
               onChangeAddress={handleChangePolkadotAddress}
+              onChangeEmail={(email) => setNonlocalStorageEmail(email)}
               onConnectAccount={handleConnectNovaWallet}
               address={polkadotAddress}
               isSubmitLoading={submitNovaWalletMutation.isPending}
