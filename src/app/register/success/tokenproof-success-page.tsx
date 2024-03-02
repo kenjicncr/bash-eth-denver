@@ -1,5 +1,5 @@
 "use client";
-import { Button, Skeleton, Spacer } from "@nextui-org/react";
+import { Button, Input, Skeleton, Spacer } from "@nextui-org/react";
 import { LandingPagePartners } from "@/components/landing-page-partners";
 import { DownloadNovaModal } from "@/components/download-nova-modal";
 import SubwalletLogo from "@/assets/logos/subwallet-icon.png";
@@ -238,6 +238,7 @@ export const TokenproofSuccessPage = () => {
                 </span>
               )}
             </p>
+            <p>Email: {email}</p>
             <DownloadView
               onBack={() => {}}
               isAuthenticated={isAuthenticated}
