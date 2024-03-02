@@ -234,7 +234,7 @@ export const TokenproofSuccessPage = () => {
                 </span>
               ) : (
                 <span className="text-red-500 text-3xl">
-                  Looks like you {`don't`} have an ETH Denver Wallet
+                  Looks like you {`don't`} have an ETH Denver Ticket
                 </span>
               )}
             </p>
