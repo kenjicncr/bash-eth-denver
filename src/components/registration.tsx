@@ -279,6 +279,7 @@ const EmailView = ({
           variant="bordered"
           label="Email address"
           placeholder="Enter your email"
+          size="lg"
         />
         <div className="px-4 h-4 absolute -bottom-4">
           {showError && (
