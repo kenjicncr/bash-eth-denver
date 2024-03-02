@@ -62,7 +62,6 @@ const claimTicket = async (account: string) => {
     },
     body: JSON.stringify({
       account: account,
-      network: "ethereum",
       event_id: eventId,
       ticket_options: [
         {
