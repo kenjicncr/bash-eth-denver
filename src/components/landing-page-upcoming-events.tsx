@@ -42,7 +42,7 @@ export const LandingPageUpcomingEvents = () => {
           as={NextLink}
           href="/register"
         >
-          Register
+          Airdrop
         </Button>
       </div>
       <div className="border-white flex flex-col lg:flex-row justify-between border border-solid items-center border-image-slice border-1 border-l-0 border-r-0 border-image-source from-transparent to-rgba(255, 255, 255, 0.3) py-8 px-4 rounded-5 bg-transparent transition duration-200 ease-in-out gap-4">

@@ -129,7 +129,7 @@ export const LandingPageHero = () => {
               as={Link}
               href="/register"
             >
-              REGISTER
+              JOIN THE MAILING LIST
             </Button>
           </motion.div>
         </div>

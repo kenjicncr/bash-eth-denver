@@ -6,6 +6,8 @@ import { useLocalStorage } from "react-use";
 import { CustomButton } from "./custom-button";
 import { PolkadotButtonModal } from "./polkadot-button-modal";
 import { TokenProofResponse, TokenproofButton } from "./tokenproof-button";
+import { Select, SelectItem } from "@nextui-org/react";
+
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { updateUser } from "@/lib/api/update-user";
@@ -17,6 +19,7 @@ import { DownloadNovaModal } from "./download-nova-modal";
 import { motion } from "framer-motion";
 import { Button, Input, Divider } from "@nextui-org/react";
 import PolkadotLogo from "@/assets/logos/polkadot-token-logo.png";
+import { DialogEmailSuccess } from "./dialog-email-success";
 
 const fadeIn = {
   hidden: { opacity: 0 },
@@ -50,14 +53,18 @@ export const Registration = () => {
 
   const [polkadotAddress, setPolkadotAddress] = useState("");
 
+  const [showEmailSuccess, setShowEmailSuccess] = useState(false);
+  const [selectedRole, setSelectedRole] = useState("");
+
   const submitEmailMutation = useMutation({
     mutationFn: (email: string) => {
       return updateUser({ email });
     },
     onSuccess: (data) => {
-      console.log({ data });
+      console.log({ selectedRole });
       setEmail(data.user.email);
-      setCurrentView("tokenproof");
+      setShowEmailSuccess(true);
+      // setCurrentView("download");
     },
     mutationKey: ["update-user-email", email],
   });
@@ -143,6 +150,29 @@ export const Registration = () => {
     setCurrentView(goBackTo);
   };
 
+  const roles = [
+    {
+      value: "founder",
+      label: "Founder",
+    },
+    {
+      value: "investor",
+      label: "Investor",
+    },
+    {
+      value: "developer",
+      label: "Developer",
+    },
+    {
+      value: "fan",
+      label: "Fan",
+    },
+    {
+      value: "other",
+      label: "Other",
+    },
+  ];
+
   const renderRegistrationView = () => {
     switch (currentView) {
       case "tokenproof":
@@ -163,7 +193,7 @@ export const Registration = () => {
       case "download":
         return (
           <DownloadView
-            onBack={() => handleBack({ goBackTo: "tokenproof" })}
+            onBack={() => handleBack({ goBackTo: "email" })}
             onContinue={handleOnContinueConnect}
             onChangeAddress={handleChangePolkadotAddress}
             onConnectAccount={handleConnectNovaWallet}
@@ -188,6 +218,9 @@ export const Registration = () => {
             email={email}
             onChangeEmail={(email) => setEmail(email)}
             isLoading={submitEmailMutation.isPending}
+            roles={roles}
+            selectedRole={selectedRole}
+            onSelectRole={(role) => setSelectedRole(role)}
             onContinue={(email) => {
               if (email) {
                 handleSubmitEmail(email);
@@ -202,13 +235,10 @@ export const Registration = () => {
     <div className="max-w-2xl mx-auto w-full">
       <motion.div variants={fadeIn} initial="hidden" animate="visible">
         <p className="text-4xl w-full text-white font-black">
-          {currentView === "download" ? (
-            <span className="text-yellow-500">
-              Congrats! You’re in for March 02.
-            </span>
-          ) : (
-            "Ticket Registration"
-          )}
+          <span>Join our mailing list</span>
+        </p>
+        <p className="text-teal-200">
+          For future announcements, upcoming events, and surprise rewards 👀
         </p>
       </motion.div>
       <motion.div
@@ -219,6 +249,10 @@ export const Registration = () => {
       >
         {renderRegistrationView()}
       </motion.div>
+      <DialogEmailSuccess
+        isOpen={showEmailSuccess}
+        onOpenChange={setShowEmailSuccess}
+      />
     </div>
   );
 };
@@ -229,6 +263,9 @@ type EmailViewProps = {
   isLoading?: boolean;
   email: string | undefined;
   onChangeEmail: (email: string) => void;
+  roles: { label: string; value: string }[];
+  selectedRole: string;
+  onSelectRole: (role: string) => void;
 };
 
 const EmailView = ({
@@ -237,6 +274,9 @@ const EmailView = ({
   onContinue,
   onBack,
   isLoading,
+  roles,
+  onSelectRole,
+  selectedRole,
 }: EmailViewProps) => {
   const [isValid, setIsValid] = useState(true);
   const [showError, setShowError] = useState(false);
@@ -281,6 +321,19 @@ const EmailView = ({
           placeholder="Enter your email"
           size="lg"
         />
+        <Select
+          label="What's your role?"
+          placeholder="Select a role"
+          className="max-w-xs mt-4"
+          selectedKeys={[selectedRole]}
+          onChange={(e) => onSelectRole && onSelectRole(e.target.value)}
+        >
+          {roles.map((role) => (
+            <SelectItem key={role.value} value={role.value}>
+              {role.label}
+            </SelectItem>
+          ))}
+        </Select>
         <div className="px-4 h-4 absolute -bottom-4">
           {showError && (
             <p className="text-red-500 text-sm">
@@ -301,7 +354,7 @@ const EmailView = ({
           isLoading={isLoading}
           onClick={onSubmit}
         >
-          Next
+          Submit
         </Button>
       </div>
     </div>
