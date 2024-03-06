@@ -58,7 +58,7 @@ export const Registration = () => {
 
   const submitEmailMutation = useMutation({
     mutationFn: (email: string) => {
-      return updateUser({ email });
+      return updateUser({ email, role: selectedRole });
     },
     onSuccess: (data) => {
       console.log({ selectedRole });
@@ -66,7 +66,7 @@ export const Registration = () => {
       setShowEmailSuccess(true);
       // setCurrentView("download");
     },
-    mutationKey: ["update-user-email", email],
+    mutationKey: ["update-user-email", email, selectedRole],
   });
 
   const handleSubmitEmail = (email: string) => {

@@ -44,10 +44,10 @@ const getUser = async (email: string) => {
 };
 export async function POST(request: Request) {
   try {
-    const { email, polkadotAddress, tokenproofAddress } = await request.json();
+    const { email, role } = await request.json();
 
     if (email) {
-      console.log("updating: ", email, polkadotAddress, tokenproofAddress);
+      console.log("updating: ", email, role);
       const result = await fetch(
         `https://partner-api.exiledracers.com/api/v1/event/user_update/`,
         {
@@ -57,10 +57,10 @@ export async function POST(request: Request) {
           },
           body: JSON.stringify({
             apikey: process.env.EXILED_RACERS_API_KEY,
-            event_id: 4,
+            partner_id: 1,
             email: email,
-            wallet: polkadotAddress,
-            custom_value: tokenproofAddress,
+            role: role,
+            source: "general",
           }),
         }
       );
@@ -69,8 +69,6 @@ export async function POST(request: Request) {
         {
           user: {
             email: email,
-            polkadotAddress: polkadotAddress,
-            tokenproofAddress: tokenproofAddress,
           },
           success: true,
         },
