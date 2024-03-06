@@ -49,7 +49,7 @@ export async function POST(request: Request) {
     if (email) {
       console.log("updating: ", email, role);
       const result = await fetch(
-        `https://partner-api.exiledracers.com/api/v1/event/user_update/`,
+        `https://partner-api.exiledracers.com/api/v1/partner/user_update/`,
         {
           method: "POST",
           headers: {
