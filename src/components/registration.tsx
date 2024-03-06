@@ -306,11 +306,6 @@ const EmailView = ({
 
   return (
     <div>
-      <div className="flex flex-col lg:flex-row gap-2">
-        <p className="text-gray-400 font-nimbus-sans-extended text-base font-normal">
-          Step 1 of 3:
-        </p>
-      </div>
       <div className="relative py-4">
         <Input
           type="email"
