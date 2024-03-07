@@ -25,7 +25,7 @@ export const DialogEmailSuccess = ({
             Success!
           </DialogTitle>
           <DialogDescription className="text-center text-lg">
-            You are now part of our mailing list.
+            You are now waitlisted.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter></DialogFooter>

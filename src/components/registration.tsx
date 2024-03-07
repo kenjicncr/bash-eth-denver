@@ -235,7 +235,7 @@ export const Registration = () => {
     <div className="max-w-2xl mx-auto w-full">
       <motion.div variants={fadeIn} initial="hidden" animate="visible">
         <p className="text-4xl w-full text-white font-black">
-          <span>Join our mailing list</span>
+          <span>Join the waitlist</span>
         </p>
         <p className="text-teal-200">
           For future announcements, upcoming events, and surprise rewards 👀

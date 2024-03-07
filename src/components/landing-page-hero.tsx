@@ -103,12 +103,14 @@ export const LandingPageHero = () => {
           animate="visible"
           className="text-4xl 2xl:text-6xl  w-full lowercase text-white z-10 mt-6 px-4 md:px-10 font-black md:max-w-6xl mx-auto"
         >
-          <motion.p variants={childVariants}>The</motion.p>
+          <motion.p variants={childVariants}>Experience</motion.p>
           <motion.p variants={childVariants} className="text-primary-500">
-            Official
+            The
           </motion.p>
-          <motion.p variants={childVariants}>Eth Denver</motion.p>
-          <motion.p variants={childVariants}>Closing Party</motion.p>
+          <motion.p variants={childVariants}>New</motion.p>
+          <motion.p variants={childVariants} className="text-primary-500">
+            Culture
+          </motion.p>
         </motion.div>
         <motion.div
           variants={logoVariants}
@@ -129,7 +131,7 @@ export const LandingPageHero = () => {
               as={Link}
               href="/register"
             >
-              JOIN THE MAILING LIST
+              JOIN THE WAITLIST
             </Button>
           </motion.div>
         </div>
