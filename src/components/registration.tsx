@@ -20,6 +20,7 @@ import { motion } from "framer-motion";
 import { Button, Input, Divider } from "@nextui-org/react";
 import PolkadotLogo from "@/assets/logos/polkadot-token-logo.png";
 import { DialogEmailSuccess } from "./dialog-email-success";
+import { useRouter } from "next/navigation";
 
 const fadeIn = {
   hidden: { opacity: 0 },
@@ -56,14 +57,16 @@ export const Registration = () => {
   const [showEmailSuccess, setShowEmailSuccess] = useState(false);
   const [selectedRole, setSelectedRole] = useState("");
 
+  const router = useRouter();
+
   const submitEmailMutation = useMutation({
     mutationFn: (email: string) => {
       return updateUser({ email, role: selectedRole });
     },
     onSuccess: (data) => {
-      console.log({ selectedRole });
       setEmail(data.user.email);
-      setShowEmailSuccess(true);
+      router.push("/");
+      toast("Success! You are now waitlisted.");
       // setCurrentView("download");
     },
     mutationKey: ["update-user-email", email, selectedRole],
@@ -80,7 +83,6 @@ export const Registration = () => {
       return updateUser({ email: email!, polkadotAddress });
     },
     onSuccess: (data) => {
-      console.log({ data });
       // setPolkadotAddress(polkadotAddress);
       toast.success("Thank you! You're all set.", {
         duration: 20000,
